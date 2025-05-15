@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Quicksand";
+    src: url(/assets/fonts/Quicksand-Variable.ttf);
+}
+
+@font-face {
+    font-family: "Britney";
+    src: url(/assets/fonts/Britney-Variable.ttf);
+}
+
+:root {
+    font-family: "Quicksand";
+}
+
+body {
+    line-height: 1.6;
+    color: #333;
+    padding: 0 25px;
+    background-color: #FFFFFB;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Britney";
+    font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
