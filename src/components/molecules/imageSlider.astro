@@ -1,0 +1,184 @@
+<div class="slider">
+    <div class="item"><img src="/images/lr-4.webp" alt="living room" /></div>
+    <div class="item"><img src="/images/bedroom1-3.webp" alt="bedroom" /></div>
+    <div class="item"><img src="/images/bathroom-2.webp" alt="bathroom" /></div>
+    <div class="item"><img src="/images/lr-7.webp" alt="living room" /></div>
+    <div class="item"><img src="/images/garden-1.webp" alt="bedroom" /></div>
+
+    <!-- Duplicate set for infinite loop -->
+    <div class="item"><img src="/images/lr-4.webp" alt="living room" /></div>
+    <div class="item"><img src="/images/bedroom1-3.webp" alt="bedroom" /></div>
+    <div class="item"><img src="/images/bathroom-2.webp" alt="bathroom" /></div>
+    <div class="item"><img src="/images/lr-7.webp" alt="living room" /></div>
+    <div class="item"><img src="/images/garden-1.webp" alt="bedroom" /></div>
+</div>
+
+<style>
+    .slider {
+        position: relative;
+        width: 100%;
+        height: 130px;
+        overflow: hidden;
+        background-color: var(--backgroundColor);
+        z-index: 11;
+    }
+
+    .item {
+        position: absolute;
+        width: 180px;
+        height: 100%;
+        animation: scrollLeft 60s linear infinite;
+    }
+
+    .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-top: solid 2px var(--primary-color);
+        border-bottom: solid 2px var(--primary-color);
+        border-left: solid 2px var(--primary-color);
+    }
+
+    /* Mobile - default 180px breedte */
+    .item:nth-child(1) {
+        left: 0px;
+    }
+    .item:nth-child(2) {
+        left: 180px;
+    }
+    .item:nth-child(3) {
+        left: 360px;
+    }
+    .item:nth-child(4) {
+        left: 540px;
+    }
+    .item:nth-child(5) {
+        left: 720px;
+    }
+    .item:nth-child(6) {
+        left: 900px;
+    }
+    .item:nth-child(7) {
+        left: 1080px;
+    }
+    .item:nth-child(8) {
+        left: 1260px;
+    }
+    .item:nth-child(9) {
+        left: 1440px;
+    }
+    .item:nth-child(10) {
+        left: 1620px;
+    }
+
+    @keyframes scrollLeft {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-900px); /* lengte van 5 items op mobiel */
+        }
+    }
+
+    /* Tablet versie (breedte: 286px, hoogte: 190px) */
+    @media screen and (min-width: 744px) {
+        .slider {
+            height: 190px;
+        }
+
+        .item {
+            width: 286px;
+        }
+
+        .item:nth-child(1) {
+            left: 0px;
+        }
+        .item:nth-child(2) {
+            left: 286px;
+        }
+        .item:nth-child(3) {
+            left: 572px;
+        }
+        .item:nth-child(4) {
+            left: 858px;
+        }
+        .item:nth-child(5) {
+            left: 1144px;
+        }
+        .item:nth-child(6) {
+            left: 1430px;
+        }
+        .item:nth-child(7) {
+            left: 1716px;
+        }
+        .item:nth-child(8) {
+            left: 2002px;
+        }
+        .item:nth-child(9) {
+            left: 2288px;
+        }
+        .item:nth-child(10) {
+            left: 2574px;
+        }
+
+        @keyframes scrollLeft {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-1430px); /* lengte van 5 tablet-items */
+            }
+        }
+    }
+
+    /* Desktop versie (breedte: 378px, hoogte: 252px) */
+    @media screen and (min-width: 1224px) {
+        .slider {
+            height: 252px;
+        }
+
+        .item {
+            width: 378px;
+        }
+
+        .item:nth-child(1) {
+            left: 0px;
+        }
+        .item:nth-child(2) {
+            left: 378px;
+        }
+        .item:nth-child(3) {
+            left: 756px;
+        }
+        .item:nth-child(4) {
+            left: 1134px;
+        }
+        .item:nth-child(5) {
+            left: 1512px;
+        }
+        .item:nth-child(6) {
+            left: 1890px;
+        }
+        .item:nth-child(7) {
+            left: 2268px;
+        }
+        .item:nth-child(8) {
+            left: 2646px;
+        }
+        .item:nth-child(9) {
+            left: 3024px;
+        }
+        .item:nth-child(10) {
+            left: 3402px;
+        }
+
+        @keyframes scrollLeft {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-1890px); /* lengte van 5 desktop-items */
+            }
+        }
+    }
+</style>
