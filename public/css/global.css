@@ -6,22 +6,23 @@
 
 @font-face {
     font-family: "Quicksand";
-    src: url(/assets/fonts/Quicksand-Variable.ttf);
+    src: url(/fonts/Quicksand-Variable.ttf);
 }
 
 @font-face {
     font-family: "Britney";
-    src: url(/assets/fonts/Britney-Variable.ttf);
+    src: url(/fonts/Britney-Variable.ttf);
 }
 
 :root {
     font-family: "Quicksand";
+    --primary-color: #3B6790;
+    --secundairy-color: #FF385C;
 }
 
 body {
     line-height: 1.6;
     color: #333;
-    padding: 0 25px;
     background-color: #FFFFFB;
 }
 
@@ -37,4 +38,32 @@ a {
 ul,
 ol {
     list-style: none;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+@media screen and (min-width: 744px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    h2 {
+        font-size: 36px;
+    }
+}
+
+@media screen and (min-width: 1224px) {
+    h1 {
+        font-size: 72px;
+    }
+
+    h2 {
+        font-size: 48px;
+    }
 }
