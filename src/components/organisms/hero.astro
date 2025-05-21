@@ -1,13 +1,98 @@
 ---
 import ImageSlider from "../molecules/imageSlider.astro";
+import Arrow from "../atoms/arrow.astro";
+import Reviews from "../atoms/reviews.astro";
 ---
 
 <section class="hero">
     <ImageSlider />
+    <div class="hero-content">
+        <h1>Charming Apartment: Moments from Central Amsterdam</h1>
+        <p>
+            A cozy 19th-century retreat on the historic Nieuwendammerdijk. Relax
+            in vintage comfort with a spacious bath and unique sleeping nooks.
+            <a class="scroll-down-btn">scroll down to explore more<span><Arrow /></span></a>
+        </p>
+        
+        <div class="airbnb-container">
+            <Reviews />
+            <a class="airbnb-btn">Book at Airbnb</a>
+        </div>
+    </div>
 </section>
 
 <style>
     .hero {
         margin-top: 50px;
+        margin-bottom: 2000px;
+    }
+
+    .hero-content {
+        padding: 25px 25px 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        max-width: 330px;
+    }
+
+    p {
+        padding: 24px 0 0;
+        max-width: 320px;
+        margin-left: auto;
+    }
+
+    .scroll-down-btn {
+        display: inline-flex;
+        color: var(--primary-color);
+        gap: 16px;
+        padding: 16px 0 50px;
+        align-items: center;
+        /* margin-left: auto; */
+    }
+
+    a span {
+        display: flex;
+    }
+
+    .airbnb-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 40px;
+        margin-left: auto;
+    }
+
+    .airbnb-btn {
+        display: inline-flex;
+        position: sticky;
+        top: 25px;
+        right: 25px;
+        background-color: var(--secundairy-color);
+        color: white;
+        padding: 12px 18px;
+        border-radius: 10px;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    @media screen and (min-width: 744px) {
+        .hero-content {
+            padding: 40px 40px 0;
+        }
+
+        h1 {
+            max-width: 430px;
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        .hero-content {
+            padding: 60px 120px 0;
+        }
+
+        h1 {
+            max-width: 650px;
+        }
     }
 </style>
