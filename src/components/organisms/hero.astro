@@ -5,18 +5,25 @@ import Reviews from "../atoms/reviews.astro";
 ---
 
 <section class="hero">
-    <ImageSlider />
+    <div class="airbnb-container">
+        <Reviews />
+        <a
+            href="https://www.airbnb.nl/rooms/1196088?check_in=2025-07-23&check_out=2025-07-28&guests=1&adults=1&s=67&unique_share_id=5ddd2a2a-6d0e-47fb-84a3-5c814d03249c"
+            class="airbnb-btn">Book at Airbnb</a
+        >
+    </div>
     <div class="hero-content">
-        <h1>Charming Apartment: Moments from Central Amsterdam</h1>
-        <p>
-            A cozy 19th-century retreat on the historic Nieuwendammerdijk. Relax
-            in vintage comfort with a spacious bath and unique sleeping nooks.
-            <a class="scroll-down-btn">scroll down to explore more<span><Arrow /></span></a>
-        </p>
-        
-        <div class="airbnb-container">
-            <Reviews />
-            <a class="airbnb-btn">Book at Airbnb</a>
+        <ImageSlider />
+        <div class="hero-text">
+            <h1>Charming Apartment: Moments from Central Amsterdam</h1>
+            <p>
+                A cozy 19th-century retreat on the historic Nieuwendammerdijk.
+                Relax in vintage comfort with a spacious bath and unique
+                sleeping nooks.
+                <a class="scroll-down-btn"
+                    >scroll down to explore more<span><Arrow /></span></a
+                >
+            </p>
         </div>
     </div>
 </section>
@@ -28,6 +35,10 @@ import Reviews from "../atoms/reviews.astro";
     }
 
     .hero-content {
+        padding-top: 50px;
+    }
+
+    .hero-text {
         padding: 25px 25px 0;
         display: flex;
         flex-direction: column;
@@ -57,30 +68,37 @@ import Reviews from "../atoms/reviews.astro";
     }
 
     .airbnb-container {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: space-between;
-        position: absolute;
-        bottom: 50px;
-        /* gap: 40px; */
-        /* margin-left: auto; */
+        padding: 0 25px;
     }
 
     .airbnb-btn {
         display: inline-flex;
-        position: fixed;
-        /* bottom: 50px; */
-        right: 25px;
-        background-color: var(--secundairy-color);
         color: white;
-        padding: 12px 18px;
-        border-radius: 10px;
+        position: fixed;
+        right: 25px;
+        padding: 14px 20px;
+        border-radius: 12px;
         line-height: 1;
         white-space: nowrap;
+        background-size: 300%;
+        transition: background-position 0.6s;
+        background-image: linear-gradient(
+            90deg,
+            var(--secundairy-color) 50%,
+            var(--primary-color) 50%
+        );
+    }
+
+    .airbnb-btn:hover {
+        color: #fff;
+        background-position: 100%;
     }
 
     @media screen and (min-width: 744px) {
-        .hero-content {
+        .hero-text {
             padding: 40px 40px 0;
         }
 
@@ -90,7 +108,7 @@ import Reviews from "../atoms/reviews.astro";
     }
 
     @media screen and (min-width: 1224px) {
-        .hero-content {
+        .hero-text {
             padding: 60px 120px 0;
         }
 
