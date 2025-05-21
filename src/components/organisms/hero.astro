@@ -47,7 +47,7 @@ import Reviews from "../atoms/reviews.astro";
         display: inline-flex;
         color: var(--primary-color);
         gap: 16px;
-        padding: 16px 0 50px;
+        padding: 16px 0 0px;
         align-items: center;
         /* margin-left: auto; */
     }
@@ -59,14 +59,17 @@ import Reviews from "../atoms/reviews.astro";
     .airbnb-container {
         display: inline-flex;
         align-items: center;
-        gap: 40px;
-        margin-left: auto;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 50px;
+        /* gap: 40px; */
+        /* margin-left: auto; */
     }
 
     .airbnb-btn {
         display: inline-flex;
-        position: sticky;
-        top: 25px;
+        position: fixed;
+        /* bottom: 50px; */
         right: 25px;
         background-color: var(--secundairy-color);
         color: white;
