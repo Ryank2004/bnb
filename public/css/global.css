@@ -6,12 +6,14 @@
 
 @font-face {
     font-family: "Quicksand";
-    src: url(/fonts/Quicksand-Variable.ttf);
+    src: url(/fonts/Quicksand-Variable.woff2) format("woff2");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Britney";
-    src: url(/fonts/Britney-Variable.ttf);
+    src: url(/fonts/Britney-Variable.woff2) format("woff2");
+    font-display: swap;
 }
 
 :root {
