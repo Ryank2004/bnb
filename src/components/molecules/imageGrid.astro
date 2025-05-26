@@ -1,4 +1,8 @@
-<section class="image-grid">
+---
+import Arrow from "../atoms/arrow.astro";
+---
+
+<section class="image-grid" id="image-grid">
     <h2>Inside the charming apartment</h2>
     <div class="grid">
         <img
@@ -53,6 +57,7 @@
         </button>
         <img id="lightbox-img" alt="" />
     </div>
+    <a class="see-more-btn">show all photos <span><Arrow /></span></a>
 </section>
 
 <script is:inline>
@@ -80,6 +85,8 @@
 
 <style>
     .image-grid {
+        display: flex;
+        flex-direction: column;
         padding: 160px 25px;
     }
 
@@ -154,6 +161,30 @@
 
     .lightbox-close:focus {
         outline: 2px solid #fff;
+    }
+
+    .see-more-btn {
+        display: inline-flex;
+        color: var(--primary-color);
+        gap: 16px;
+        padding: 16px 0 0px;
+        align-items: center;
+        margin-left: auto;
+        margin-right: 4px;
+    }
+
+    .see-more-btn span {
+        display: inline-flex;
+        transform: rotate(-90deg);
+        transition: transform 0.5s ease;
+    }
+
+    .see-more-btn:hover > span {
+        transform:  rotate(0deg);
+    }
+
+    .see-more-btn:hover {
+        cursor: pointer;
     }
 
     @media screen and (min-width: 744px) {
