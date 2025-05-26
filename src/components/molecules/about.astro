@@ -1,0 +1,238 @@
+---
+import Arrow from "../atoms/arrow.astro";
+---
+
+<section class="about">
+    <h2>About the space</h2>
+    <p>
+        This beautiful nineteenth-century dike house is located 15 minutes from
+        Central Station. This apartment is located here, which covers 45 m2 and
+        has been completely renovated...
+    </p>
+    <a class="text-btn">see more <span><Arrow /></span></a>
+
+    <div id="textbox" class="textbox">
+        <button id="textbox-close" class="textbox-close" aria-label="Sluiten"
+            ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                ></path>
+            </svg>
+        </button>
+        <div class="text-container">
+            <p>
+                This beautiful nineteenth-century dike house is located 15
+                minutes from Central Station. This apartment is located here,
+                which covers 45 m2 and has been completely renovated. It is an
+                old house, so it is a bit noisy. It consists of a double bedroom
+                with an electrically adjustable bed and a flat-screen TV.
+                Furthermore, a living room with a pleasant sitting area and a
+                dining table. There is a cozy box bed (double bed) in the living
+                room. The designer bathroom has an XXL bath and a walk-in
+                shower. There is a separate toilet. The apartment has its own
+                emergency/exit via the back. It has a Nespresso machine and a
+                kettle, a refrigerator and all the necessities to make
+                breakfast. There is a sink to do the dishes. Hot food cannot be
+                made and I am allowed to host a maximum of 4 people. This is due
+                to my permit.
+                <br />
+                The house is located on the monumental Nieuwendammerdijk, one of
+                the top locations in Amsterdam. In the beautiful Vliegenbos, a 5-minute
+                walk away, there is a tennis club. On the way you will pass Het Sluisje,
+                a well-known café among Amsterdammers with a beautiful terrace where
+                you can also eat.
+                <br />
+                From the house you can cycle to the ferry in 12 minutes, which takes
+                you to Central Station in 3 minutes. From there you are within walking
+                distance of all the major attractions that Amsterdam city center
+                has to offer. Of course you can also take the bus to the metro, it
+                leaves every 10 minutes around the corner and takes you to the metro
+                in 5 minutes, the metro takes you anywhere in the city within 15
+                minutes, Amsterdam is after all a small city everything is close
+                by. For those who prefer peace and quiet, the Nieuwendammerdijk is
+                the ideal base for the rustic North Holland Waterland. Tourist attractions
+                such as Durgerdam, Volendam and Marken are within cycling distance.
+                Best of both worlds, the city center is close by and so is the countryside.
+                <br />
+                The owner lives in the upper house. together with his 20 year old
+                son and their cat. It is paid parking the costs are €9.90 per day.
+                Or €1.60 per hour
+                <br />
+                Finally: anyone arriving at Schiphol can be picked up by the owner,
+                ask for information about this. Guest access you have all the space
+                for you and the rest of the guests. Only sometimes I have to use
+                the washing machine. But I will talk to you first if I would use
+                it if necessary Other things to look out for Violating the house
+                rules will result in a fine of €
+                <br />
+                Registration number 03637B6FE171C6D89CC8
+            </p>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    // 1. Selecteer de knoppen en de overlay
+    const openBtn = document.querySelector(".text-btn");
+    const overlay = document.getElementById("textbox");
+    const textBoxCloseBtn = document.getElementById("textbox-close");
+
+    // 2. Functie om overlay te tonen
+    function showOverlay() {
+        overlay.classList.add("active");
+    }
+
+    // 3. Functie om overlay te verbergen
+    function hideOverlay() {
+        overlay.classList.remove("active");
+    }
+
+    // 4. Event listeners toevoegen
+    openBtn.addEventListener("click", showOverlay);
+    textBoxCloseBtn.addEventListener("click", hideOverlay);
+
+    // 5. (Optioneel) Klikken buiten de tekst kan ook sluiten
+    overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+            hideOverlay();
+        }
+    });
+</script>
+
+<style>
+    .about {
+        padding: 0 25px;
+    }
+
+    .text-btn {
+        display: inline-flex;
+        color: var(--primary-color);
+        gap: 16px;
+        padding: 16px 0 0px;
+        align-items: center;
+        margin-right: 4px;
+    }
+
+    .text-btn span {
+        display: inline-flex;
+        transform: rotate(-90deg);
+        transition: transform 0.5s ease;
+    }
+
+    .text-btn:hover > span {
+        transform: rotate(0deg);
+    }
+
+    .text-btn:hover {
+        cursor: pointer;
+    }
+
+    .textbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex; /* Altijd flex */
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+        z-index: 1000;
+        transition:
+            opacity 0.15s ease-out,
+            visibility 0.15s ease-out;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .textbox.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .textbox-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        font-size: 2rem;
+        color: #fffffb;
+        cursor: pointer;
+        z-index: 1001;
+        line-height: 1;
+    }
+
+    .text-container {
+        height: 500px;
+        overflow-y: scroll;
+        padding: 25px 32px;
+        margin: 0 25px;
+        border-radius: 14px 0 0 14px;
+        background-color: #fffffb;
+    }
+
+    /* Custom scrollbar */
+    .text-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .text-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .text-container::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+    }
+
+    .text-container::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .textbox p {
+        width: 100%;
+        height: auto;
+    }
+
+    .textbox-close svg {
+        width: 48px;
+        height: auto;
+    }
+
+    .textbox-close:focus {
+        outline: 2px solid #fff;
+    }
+
+    @media screen and (min-width: 744px) {
+        .about {
+            padding: 0 40px;
+            max-width: 90vw;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .about {
+            padding: 0 80px;
+            max-width: 45vw;
+            border-right: solid 1.5px var(--primary-color);
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        .about {
+            padding: 0 120px;
+        }
+    }
+
+    @media screen and (min-width: 1424px) {
+    }
+</style>
