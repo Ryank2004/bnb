@@ -20,7 +20,7 @@ import Reviews from "../atoms/reviews.astro";
                 A cozy 19th-century retreat on the historic Nieuwendammerdijk.
                 Relax in vintage comfort with a spacious bath and unique
                 sleeping nooks.
-                <a class="scroll-down-btn"
+                <a href="#image-grid" class="scroll-down-btn"
                     >scroll down to explore more<span><Arrow /></span></a
                 >
             </p>
@@ -31,7 +31,6 @@ import Reviews from "../atoms/reviews.astro";
 <style>
     .hero {
         margin-top: 25px;
-        margin-bottom: 2000px;
     }
 
     .hero-content {
@@ -115,8 +114,21 @@ import Reviews from "../atoms/reviews.astro";
     }
 
     @media screen and (min-width: 744px) {
+        .hero {
+            margin-top: 50px;
+        }
+
         .hero-text {
             padding: 40px 40px 0;
+        }
+
+        .airbnb-container {
+            padding: 0 220px;
+            justify-content: end;
+        }
+
+        .airbnb-btn {
+            right: 40px;
         }
 
         h1 {
@@ -124,13 +136,55 @@ import Reviews from "../atoms/reviews.astro";
         }
     }
 
+    @media screen and (min-width: 1024px) {
+        .hero-text {
+            padding: 60px 80px 0;
+        }
+
+        .airbnb-container {
+            padding: 0 280px;
+        }
+
+        .airbnb-btn {
+            right: 80px;
+        }
+    }
+
     @media screen and (min-width: 1224px) {
         .hero-text {
             padding: 60px 120px 0;
+            flex-direction: row-reverse;
+        }
+
+        p {
+            max-width: 460px;
+            margin-left: 0;
+            margin-right: auto;
+            padding-top: 160px;
+        }
+
+        .airbnb-container {
+            padding: 0 320px;
+        }
+
+        .airbnb-btn {
+            right: 120px;
         }
 
         h1 {
             max-width: 650px;
+            min-width: 580px;
+            padding-left: 48px;
+        }
+    }
+
+    @media screen and (min-width: 1424px) {
+        h1 {
+            padding-left: 0;
+        }
+
+        p {
+            padding-top: 120px;
         }
     }
 </style>
