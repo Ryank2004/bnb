@@ -1,0 +1,183 @@
+<section class="bedrooms-container">
+    <h2>Where you will sleep</h2>
+    <div class="bedrooms">
+        <div class="bedroom">
+            <img
+                class="image"
+                src="/images/bedroom1-1.webp"
+                alt="bedroom 1"
+                loading="lazy"
+            />
+            <p class="bedrooms-text">
+                Bedroom 1<br /><span>1 king size bed</span>
+            </p>
+        </div>
+
+        <div class="bedroom">
+            <img
+                class="image"
+                src="/images/bedroom2-3.webp"
+                alt="bedroom 2"
+                loading="lazy"
+            />
+            <p class="bedrooms-text">
+                Bedroom 2<br /><span>1 queen size bed</span>
+            </p>
+        </div>
+    </div>
+    <div id="bedroom-overlay" class="bedroom-overlay">
+        <button
+            id="bedroom-overlay-close"
+            class="bedroom-overlay-close"
+            aria-label="Sluiten"
+            ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                ></path>
+            </svg>
+        </button>
+        <img id="bedroom-overlay-img" alt="" />
+    </div>
+</section>
+
+<script is:inline>
+    const image = document.querySelectorAll(".bedrooms-container .image");
+    const bedroomOverlay = document.getElementById("bedroom-overlay");
+    const overlayImage = document.getElementById("bedroom-overlay-img");
+    const closeButton = document.getElementById("bedroom-overlay-close");
+
+    image.forEach((img) => {
+        img.addEventListener("click", () => {
+            overlayImage.src = img.src;
+            overlayImage.alt = img.alt;
+            bedroomOverlay.classList.add("active");
+        });
+    });
+
+    bedroomOverlay.addEventListener("click", () => {
+        bedroomOverlay.classList.remove("active");
+    });
+
+    closeButton.addEventListener("click", () => {
+        bedroomOverlay.classList.remove("active");
+    });
+</script>
+
+<style>
+    .bedrooms-container {
+        display: flex;
+        flex-direction: column;
+        padding: 160px 25px;
+    }
+
+    .bedrooms img {
+        width: 100%;
+        height: auto;
+        border: solid 1.5px var(--primary-color);
+    }
+
+    .bedrooms-text {
+        padding: 8px 0 24px;
+        line-height: 1.2;
+    }
+
+    .bedrooms-text span {
+        font-size: 14px;
+    }
+
+    .bedroom-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+        z-index: 1000;
+        transition:
+            opacity 0.2s ease-out,
+            visibility 0.2s ease-out;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        display: flex;
+    }
+
+    .bedroom-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .bedroom-overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        width: 100%;
+        height: auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .bedroom-overlay-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        font-size: 2rem;
+        color: #fffffb;
+        cursor: pointer;
+        z-index: 1001;
+        line-height: 1;
+    }
+
+    .bedroom-overlay-close svg {
+        width: 48px;
+        height: auto;
+    }
+
+    .bedroom-overlay-close:focus {
+        outline: 2px solid #fff;
+    }
+
+    @media screen and (min-width: 744px) {
+        .bedrooms-container {
+            padding: 160px 40px;
+        }
+
+        .bedrooms {
+            display: flex;
+            gap: 36px;
+        }
+
+        .bedrooms-text span {
+            font-size: 16px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .bedrooms-container {
+            padding: 160px 0;
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        .bedrooms-container {
+            padding: 240px 0;
+        }
+
+        .bedrooms-text span {
+            font-size: 18px;
+        }
+    }
+
+    @media screen and (min-width: 1424px) {
+    }
+</style>
