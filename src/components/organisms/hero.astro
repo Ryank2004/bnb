@@ -113,26 +113,32 @@ import Reviews from "../atoms/reviews.astro";
         background-position: 100%;
     }
 
-    @media screen and (min-width: 744px) {
-        .hero {
-            margin-top: 50px;
-        }
-
+    @media screen and (min-width: 544px) {
         .hero-text {
             padding: 40px 40px 0;
-        }
-
-        .airbnb-container {
-            padding: 0 220px;
-            justify-content: end;
         }
 
         .airbnb-btn {
             right: 40px;
         }
 
+        .airbnb-container {
+            padding: 0 40px;
+        }
+    }
+
+    @media screen and (min-width: 744px) {
+        .hero {
+            margin-top: 50px;
+        }
+
         h1 {
             max-width: 430px;
+        }
+
+        .airbnb-container {
+            padding: 0 220px;
+            justify-content: end;
         }
     }
 

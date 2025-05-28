@@ -106,6 +106,14 @@ import Arrow from "../atoms/arrow.astro";
             hideOverlay();
         }
     });
+
+    function isiOS() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    if (isiOS()) {
+        document.documentElement.classList.add("is-ios");
+    }
 </script>
 
 <style>
@@ -179,10 +187,18 @@ import Arrow from "../atoms/arrow.astro";
         margin: 0 25px;
         border-radius: 14px 0 0 14px;
         background-color: #fffffb;
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: var(--primary-color) #f1f1f1;
     }
 
-    /* Voor alle webkit browsers */
+    /* iOS override via JS-klasse */
+    .is-ios .text-container {
+        border-radius: 14px;
+    }
+
+    /* Webkit scrollbars */
     .text-container::-webkit-scrollbar {
+        -webkit-appearance: none;
         width: 8px;
     }
     .text-container::-webkit-scrollbar-track {
@@ -193,18 +209,6 @@ import Arrow from "../atoms/arrow.astro";
     }
     .text-container::-webkit-scrollbar-thumb:hover {
         background: #555;
-    }
-
-    /* Safari-specifieke aanpassing */
-    .text-container {
-        scrollbar-width: thin; /* Voor Firefox */
-        scrollbar-color: var(--primary-color) #f1f1f1; /* Voor Firefox */
-    }
-
-    /* Safari scrollbar altijd zichtbaar maken */
-    .text-container::-webkit-scrollbar {
-        -webkit-appearance: none;
-        width: 8px;
     }
 
     .textbox p {
@@ -221,7 +225,7 @@ import Arrow from "../atoms/arrow.astro";
         outline: 2px solid #fff;
     }
 
-    @media screen and (min-width: 744px) {
+    @media screen and (min-width: 544px) {
         .about {
             padding: 0 40px;
             max-width: 90%;
