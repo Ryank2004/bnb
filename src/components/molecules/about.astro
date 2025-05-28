@@ -181,21 +181,30 @@ import Arrow from "../atoms/arrow.astro";
         background-color: #fffffb;
     }
 
-    /* Custom scrollbar */
+    /* Voor alle webkit browsers */
     .text-container::-webkit-scrollbar {
         width: 8px;
     }
-
     .text-container::-webkit-scrollbar-track {
         background: #f1f1f1;
     }
-
     .text-container::-webkit-scrollbar-thumb {
         background: var(--primary-color);
     }
-
     .text-container::-webkit-scrollbar-thumb:hover {
         background: #555;
+    }
+
+    /* Safari-specifieke aanpassing */
+    .text-container {
+        scrollbar-width: thin; /* Voor Firefox */
+        scrollbar-color: var(--primary-color) #f1f1f1; /* Voor Firefox */
+    }
+
+    /* Safari scrollbar altijd zichtbaar maken */
+    .text-container::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 8px;
     }
 
     .textbox p {
@@ -215,24 +224,24 @@ import Arrow from "../atoms/arrow.astro";
     @media screen and (min-width: 744px) {
         .about {
             padding: 0 40px;
-            max-width: 90vw;
+            max-width: 90%;
         }
     }
 
     @media screen and (min-width: 1024px) {
         .about {
-            padding: 0 80px;
-            max-width: 45vw;
+            padding: 0 25px 0 80px;
             border-right: solid 1.5px var(--primary-color);
+            max-width: 40%;
         }
     }
 
     @media screen and (min-width: 1224px) {
         .about {
-            padding: 0 120px;
+            padding: 0 50px 0 120px;
         }
     }
 
-    @media screen and (min-width: 1424px) {
-    }
+    /* @media screen and (min-width: 1424px) {
+    } */
 </style>

@@ -1,14 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/organisms/hero.astro';
-import ImageGrid from '../components/molecules/imageGrid.astro';
-import About from '../components/molecules/about.astro';
-import Bedrooms from '../components/molecules/bedrooms.astro';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/organisms/hero.astro";
+import ImageGrid from "../components/molecules/imageGrid.astro";
+import About from "../components/molecules/about.astro";
+import Bedrooms from "../components/molecules/bedrooms.astro";
 ---
 
 <Layout>
 	<Hero />
 	<ImageGrid />
-	<About />
-	<Bedrooms />
+	<div class="horizontal">
+		<About />
+		<Bedrooms />
+	</div>
 </Layout>
+
+<style>
+	.horizontal {
+		display: flex;
+		flex-direction: column;
+	}
+
+	@media screen and (min-width: 1024px) {
+		.horizontal {
+			flex-direction: row;
+			padding-bottom: 160px;
+		}
+	}
+
+	@media screen and (min-width: 1224px) {
+		.horizontal {
+			padding-bottom: 240px;
+		}
+    }
+</style>
