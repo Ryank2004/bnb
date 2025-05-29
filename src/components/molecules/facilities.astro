@@ -149,8 +149,25 @@
 
     @media screen and (min-width: 544px) {
         .facilities {
-            padding: 0 40px;
+            padding: 0 40px 200px;
             /* max-width: 90%; */
+        }
+
+        .facilities ul {
+            gap: 24px;
+        }
+
+        .facilities ul:nth-of-type(1) {
+            margin-bottom: 24px;
+        }
+
+        .facility {
+            gap: 20px;
+        }
+
+        .facility svg {
+            width: 28px;
+            height: auto;
         }
     }
 
@@ -175,15 +192,70 @@
         }
     }
 
-    @media screen and (min-width: 1024px) {
-        .facilities {
-            padding: 0 80px;
+    @media screen and (min-width: 744px) {
+        p {
+            font-size: 18px;
         }
     }
 
-    @media screen and (min-width: 1224px) {
+    @media screen and (min-width: 1024px) {
         .facilities {
-            padding: 0 120px;
+            padding: 0 40px 0 80px;
+            border-right: solid 1.5px var(--primary-color);
+            width: 100%;
+        }
+
+        .facility-list {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: none;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .facility svg {
+            width: 24px;
+        }
+    }
+
+    @media screen and (min-width: 1238px) {
+        .facilities {
+            padding: 0 120px 0 80px;
+        }
+    }
+
+    @media screen and (min-width: 1300px) {
+        .facilities {
+            padding: 0 80px 0 120px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .facility svg {
+            width: 28px;
+        }
+    }
+
+    @media screen and (min-width: 1467px) {
+        .facilities {
+            padding: 0 160px 0 200px;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        .facility svg {
+            width: 30px;
+        }
+
+        .facility li {
+            white-space: nowrap;
         }
     }
 </style>
