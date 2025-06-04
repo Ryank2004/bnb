@@ -20,6 +20,8 @@
     font-family: "Quicksand";
     --primary-color: #3B6790;
     --secondairy-color: #FF385C;
+    --light-color: #FFFFFB;
+    --dark-color: #333;
 }
 
 html {
@@ -29,7 +31,7 @@ html {
 body {
     line-height: 1.6;
     color: #333;
-    background-color: #FFFFFB;
+    background-color: var(--light-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
