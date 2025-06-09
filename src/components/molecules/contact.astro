@@ -8,7 +8,7 @@
         experience.</p>
     <form id="contactForm" class="form">
         <div class="form-item">
-            <label> Naam* </label>
+            <label> Name* </label>
             <input type="text" name="name" required />
         </div>
 
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-item">
-            <label> Bericht* </label>
+            <label> Message* </label>
             <textarea name="message" required></textarea>
         </div>
 
@@ -26,32 +26,6 @@
     </form>
 </section>
 
-<script type="module">
-    document
-        .getElementById("contactForm")
-        .addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const form = e.target;
-
-            const data = {
-                name: form.name.value,
-                email: form.email.value,
-                message: form.message.value,
-            };
-
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
-
-            if (res.ok) {
-                window.location.href = "/succes";
-            } else {
-                alert("Fout bij verzenden.");
-            }
-        });
-</script>
 <script type="module">
     document
         .getElementById("contactForm")
@@ -130,8 +104,6 @@
         color: var(--light-color);
         padding: 14px 20px;
         font-size: 16px;
-        /* margin-left: auto; */
-        /* font-weight: 700; */
         border: none;
         border-radius: 12px;
         width: auto;
@@ -141,5 +113,23 @@
 
     .send-button:hover {
         cursor: pointer;
+    }
+
+    @media screen and (min-width: 544px) {
+        .contact {
+            padding: 0 40px 80px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .contact {
+            padding: 0 80px 120px;
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        .contact {
+            padding: 0 120px 200px;
+        }
     }
 </style>
