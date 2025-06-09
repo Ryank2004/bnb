@@ -1,0 +1,74 @@
+<footer>
+    <ul>
+        <li><a href="tel:+31630922233">Phone number: +31 6 30 92 22 33</a></li>
+        <li>E-mail adress: djwanka@gmail.com</li>
+        <li>Rental Registration Number: 03637B6FE171C6D89CC8</li>
+    </ul>
+    <p>Made with care by <a href="https://brixstudio.nl/">brixstudio.nl</a></p>
+</footer>
+
+<style>
+    footer {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 25px;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    li {
+        font-size: 16px;
+    }
+
+    a {
+        color: var(--light-color);
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 16px;
+        margin-top: 24px;
+    }
+
+    p a {
+        text-decoration: underline;
+    }
+
+    @media screen and (min-width: 544px) {
+        footer {
+            padding: 40px;
+        }
+
+        ul {
+            gap: 24px;
+        }
+    }
+
+    @media screen and (min-width: 544px) {
+        footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        p {
+            font-size: 16px;
+            margin-top: auto;
+            white-space: nowrap;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        footer {
+            padding: 40px 80px;
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        footer {
+            padding: 60px 120px;
+        }
+    }
+</style>
