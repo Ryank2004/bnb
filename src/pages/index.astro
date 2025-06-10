@@ -12,162 +12,158 @@ import Contact from "../components/molecules/contact.astro";
 ---
 
 <Layout>
-  <!-- Splash Screen -->
-  <div class="splash-screen" id="splashScreen">
-    <div class="splash-content">
-      <h1 class="welcome-title">Welcome</h1>
-      <div class="loading-container">
-        <div class="loading-bar">
-          <div class="loading-progress"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Splash Screen -->
+	<div class="splash-screen" id="splashScreen">
+		<div class="splash-content">
+			<h1 class="welcome-title">Welcome</h1>
+			<div class="loading-container">
+				<div class="loading-bar">
+					<div class="loading-progress"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- Main Content -->
-  <div class="main-content" id="mainContent">
-    <Hero />
-    <ImageGrid />
-    <div class="horizontal">
-      <About />
-      <Bedrooms />
-    </div>
-    <div class="horizontal">
-      <Facilities />
-      <Safety />
-    </div>
-    <Location />
-    <div class="horizontal">
-      <Rules />
-      <Contact />
-    </div>
-  </div>
+	<!-- Main Content -->
+	<div class="main-content" id="mainContent">
+		<Hero />
+		<ImageGrid />
+		<div class="horizontal">
+			<About />
+			<Bedrooms />
+		</div>
+		<div class="horizontal">
+			<Facilities />
+			<Safety />
+		</div>
+		<Location />
+		<div class="horizontal">
+			<Rules />
+			<Contact />
+		</div>
+	</div>
 </Layout>
 
 <style>
-  /* Splash Screen Styles */
-  .splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #fffffB;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: slideUp 0.8s ease-in-out 2.5s forwards;
-  }
+	/* Splash Screen Styles */
+	.splash-screen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100dvh;
+		background: #fffffb;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+		animation: slideUp 0.8s ease-in-out 2.5s forwards;
+	}
 
-  .splash-content {
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 0.8s ease-out 0.3s forwards;
-  }
+	.splash-content {
+		text-align: center;
+		opacity: 0;
+		animation: fadeIn 0.8s ease-out 0.3s forwards;
+	}
 
-  .welcome-title {
-    /* font-size: 3rem;
+	.welcome-title {
+		/* font-size: 3rem;
     font-weight: 300; */
-    color: #333;
-    margin-bottom: 40px;
-    letter-spacing: 3px;
-  }
+		color: #333;
+		margin-bottom: 40px;
+		letter-spacing: 3px;
+	}
 
-  .loading-container {
-    width: 200px;
-    margin: 0 auto;
-  }
+	.loading-container {
+		width: 150px;
+		margin: 0 auto;
+	}
 
-  .loading-bar {
-    width: 100%;
-    height: 2px;
-    background: #e0e0e0;
-    border-radius: 1px;
-    overflow: hidden;
-  }
+	.loading-bar {
+		width: 100%;
+		height: 2px;
+		background: #e0e0e0;
+		border-radius: 1px;
+		overflow: hidden;
+	}
 
-  .loading-progress {
-    height: 100%;
-    background: #333;
-    border-radius: 1px;
-    animation: loading 2s ease-in-out forwards;
-    transform: translateX(-100%);
-  }
+	.loading-progress {
+		height: 100%;
+		background: #333;
+		border-radius: 1px;
+		animation: loading 2s ease-in-out forwards;
+		transform: translateX(-100%);
+	}
 
-  /* Main Content */
-  .main-content {
-    opacity: 0;
-    animation: fadeInContent 0.8s ease-out 3.3s forwards;
-  }
+	/* Main Content */
+	.main-content {
+		opacity: 0;
+		animation: fadeInContent 0.8s ease-out 3.3s forwards;
+	}
 
-  /* Existing Styles */
-  .horizontal {
-    display: flex;
-    flex-direction: column;
-  }
+	/* Existing Styles */
+	.horizontal {
+		display: flex;
+		flex-direction: column;
+	}
 
-  @media screen and (min-width: 1024px) {
-    .horizontal {
-      flex-direction: row;
-      padding-bottom: 160px;
-    }
-    .horizontal:nth-of-type(2) {
-      justify-content: space-between;
-    }
-  }
+	@media screen and (min-width: 744px) {
+		.loading-container {
+			width: 200px;
+		}
+	}
 
-  @media screen and (min-width: 1224px) {
-    .horizontal {
-      padding-bottom: 240px;
-    }
-  }
+	@media screen and (min-width: 1024px) {
+		.horizontal {
+			flex-direction: row;
+			padding-bottom: 160px;
+		}
+		.horizontal:nth-of-type(2) {
+			justify-content: space-between;
+		}
+	}
 
-  /* Responsive splash screen */
-  @media (max-width: 768px) {
-    .welcome-title {
-      font-size: 2.5rem;
-    }
-    .loading-container {
-      width: 150px;
-    }
-  }
+	@media screen and (min-width: 1224px) {
+		.horizontal {
+			padding-bottom: 240px;
+		}
+	}
 
-  /* Animations */
-  @keyframes slideUp {
-    to {
-      transform: translateY(-100%);
-    }
-  }
+	/* Animations */
+	@keyframes slideUp {
+		to {
+			transform: translateY(-100%);
+		}
+	}
 
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
+	@keyframes fadeIn {
+		to {
+			opacity: 1;
+		}
+	}
 
-  @keyframes loading {
-    to {
-      transform: translateX(0);
-    }
-  }
+	@keyframes loading {
+		to {
+			transform: translateX(0);
+		}
+	}
 
-  @keyframes fadeInContent {
-    to {
-      opacity: 1;
-    }
-  }
+	@keyframes fadeInContent {
+		to {
+			opacity: 1;
+		}
+	}
 </style>
 
 <script>
-  // Optional: Hide splash screen fallback
-  document.addEventListener('DOMContentLoaded', function() {
-    // Ensure splash screen is removed after animation
-    setTimeout(() => {
-      const splash = document.getElementById('splashScreen');
-      if (splash) {
-        splash.style.display = 'none';
-      }
-    }, 3500);
-  });
+	// Optional: Hide splash screen fallback
+	document.addEventListener("DOMContentLoaded", function () {
+		// Ensure splash screen is removed after animation
+		setTimeout(() => {
+			const splash = document.getElementById("splashScreen");
+			if (splash) {
+				splash.style.display = "none";
+			}
+		}, 3500);
+	});
 </script>
