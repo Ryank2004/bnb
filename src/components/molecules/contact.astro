@@ -1,0 +1,135 @@
+<section class="contact">
+    <h2>Contact</h2>
+    <p>Feel free to reach out with any questions 
+        or to book your stay directly with us. 
+        No Airbnb account is required. We are 
+        happy to help you plan your visit and 
+        provide you with the best possible 
+        experience.</p>
+    <form id="contactForm" class="form">
+        <div class="form-item">
+            <label> Name* </label>
+            <input type="text" name="name" required />
+        </div>
+
+        <div class="form-item">
+            <label> E-mail* </label>
+            <input type="email" name="email" required />
+        </div>
+
+        <div class="form-item">
+            <label> Message* </label>
+            <textarea name="message" required></textarea>
+        </div>
+
+        <button class="send-button" type="submit">Send message</button>
+    </form>
+</section>
+
+<script type="module">
+    document
+        .getElementById("contactForm")
+        .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target;
+
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                message: form.message.value,
+            };
+
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            if (res.ok) {
+                window.location.href = "/succes";
+            } else {
+                alert("Fout bij verzenden.");
+            }
+        });
+</script>
+
+<style>
+    p {
+        margin-bottom: 36px;
+    }
+
+    .contact {
+        padding: 0 25px 80px;
+        /* display: flex; */
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 1;
+        gap: 24px;
+        margin: 0 auto;
+        max-width: 680px;
+    }
+
+    form div {
+        display: grid;
+        grid-template-columns: 1;
+    }
+
+    label {
+        font-family: "Britney";
+        font-size: 24px;
+        line-height: 24px;
+        padding-left: 4px;
+    }
+
+    input,
+    textarea {
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid var(--primary-color);
+        padding: 8px 20px;
+    }
+
+    input {
+        height: 44px;
+    }
+
+    textarea {
+        height: 128px;
+    }
+
+    .send-button {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        padding: 14px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+        width: auto;
+        margin: 24px 0 0 auto;
+        width: max-content;
+    }
+
+    .send-button:hover {
+        cursor: pointer;
+    }
+
+    @media screen and (min-width: 544px) {
+        .contact {
+            padding: 0 40px 80px;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        .contact {
+            padding: 0 80px 120px;
+        }
+    }
+
+    @media screen and (min-width: 1224px) {
+        .contact {
+            padding: 0 120px 200px;
+        }
+    }
+</style>

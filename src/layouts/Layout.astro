@@ -1,6 +1,6 @@
 ---
-import BackgroundTexture from "../components/atoms/backgroundTexture.astro"
-import Footer from "../components/molecules/footer.astro"
+import BackgroundTexture from "../components/atoms/backgroundTexture.astro";
+import Footer from "../components/molecules/footer.astro";
 ---
 
 <!doctype html>
@@ -17,7 +17,24 @@ import Footer from "../components/molecules/footer.astro"
 		<BackgroundTexture />
 		<slot />
 		<Footer />
+
+		<script>
+			import Lenis from "lenis";
+
+			// Start Lenis na splash screen (3.5 seconden)
+			setTimeout(() => {
+				const lenis = new Lenis({
+					duration: 1.5, // Optioneel: pas smoothness aan
+					easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+				});
+
+				function raf(time: number) {
+					lenis.raf(time);
+					requestAnimationFrame(raf);
+				}
+
+				requestAnimationFrame(raf);
+			}, 3500);
+		</script>
 	</body>
 </html>
-
-
