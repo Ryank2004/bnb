@@ -12,16 +12,18 @@ import Contact from "../components/molecules/contact.astro";
 ---
 
 <Layout>
-	<!-- Splash Screen -->
+	<!-- Logo Splash Screen -->
 	<div class="splash-screen" id="splashScreen">
-		<div class="splash-content">
-			<h1 class="welcome-title">Welcome</h1>
-			<div class="loading-container">
-				<div class="loading-bar">
-					<div class="loading-progress"></div>
-				</div>
+		<div class="logo-container">
+			<div class="logo">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+				  </svg>				  
 			</div>
 		</div>
+
+		<!-- Flash overlay -->
+		<div class="flash-overlay"></div>
 	</div>
 
 	<!-- Main Content -->
@@ -45,7 +47,6 @@ import Contact from "../components/molecules/contact.astro";
 </Layout>
 
 <style>
-	/* Splash Screen Styles */
 	.splash-screen {
 		position: fixed;
 		top: 0;
@@ -57,63 +58,57 @@ import Contact from "../components/molecules/contact.astro";
 		justify-content: center;
 		align-items: center;
 		z-index: 9999;
-		animation: slideUp 0.8s ease-in-out 2.5s forwards;
+		animation: splashOut 0.1s ease-in-out 1.4s forwards;
 	}
 
-	.splash-content {
-		text-align: center;
+	.logo-container {
+		position: relative;
 		opacity: 0;
-		animation: fadeIn 0.8s ease-out 0.3s forwards;
+		animation: logoReveal 0.1s ease-out 0.2s forwards;
 	}
 
-	.welcome-title {
-		color: #333;
-		margin-bottom: 24px;
-		letter-spacing: 3px;
+	.logo {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		animation: logoSting 0.7s ease-out 0.2s forwards;
 	}
 
-	.loading-container {
-		width: 120px;
-		margin: 0 auto;
-	}
-
-	.loading-bar {
+	.logo svg {
 		width: 100%;
-		height: 2px;
-		background: #e0e0e0;
-		border-radius: 1px;
-		overflow: hidden;
-	}
-
-	.loading-progress {
 		height: 100%;
-		background: #333;
-		border-radius: 1px;
-		animation: loading 2s ease-in-out forwards;
-		transform: translateX(-100%);
+		transition: all 0.3s ease;
 	}
 
-	/* Main Content */
+	.flash-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #ffffff;
+		opacity: 0;
+		pointer-events: none;
+		animation: quickFlash 0.1s ease-out 1.3s forwards;
+	}
+
 	.main-content {
 		opacity: 0;
-		animation: fadeInContent 0.8s ease-out 3.3s forwards;
+		animation: fadeInContent 0.8s ease-out 1.4s forwards;
 	}
-
-	/* Existing Styles */
+	
 	.horizontal {
 		display: flex;
 		flex-direction: column;
 	}
 
-	@media screen and (min-width: 744px) {
-		.loading-container {
-			width: 200px;
-		}
-
-		.welcome-title {
-			color: #333;
-			margin-bottom: 30px;
-			letter-spacing: 3px;
+	@media screen and (min-width: 768px) {
+		.logo,
+		.text-logo {
+			width: 60px;
+			height: 60px;
 		}
 	}
 
@@ -134,21 +129,41 @@ import Contact from "../components/molecules/contact.astro";
 	}
 
 	/* Animations */
-	@keyframes slideUp {
-		to {
-			transform: translateY(-100%);
-		}
-	}
-
-	@keyframes fadeIn {
+	@keyframes logoReveal {
 		to {
 			opacity: 1;
 		}
 	}
 
-	@keyframes loading {
+	@keyframes logoSting {
+		40% {
+			transform: scale(2.2);
+		}
+
+		60% {
+			transform: scale(2.2);
+		}
+		100% {
+			transform: scale(2);
+		}
+	}
+
+	@keyframes quickFlash {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	@keyframes splashOut {
 		to {
-			transform: translateX(0);
+			opacity: 0;
+			visibility: hidden;
 		}
 	}
 
@@ -160,14 +175,13 @@ import Contact from "../components/molecules/contact.astro";
 </style>
 
 <script>
-	// Optional: Hide splash screen fallback
 	document.addEventListener("DOMContentLoaded", function () {
-		// Ensure splash screen is removed after animation
+		// Cleanup na animatie
 		setTimeout(() => {
 			const splash = document.getElementById("splashScreen");
 			if (splash) {
 				splash.style.display = "none";
 			}
-		}, 3500);
+		}, 1800);
 	});
 </script>
