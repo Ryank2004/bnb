@@ -55,7 +55,7 @@
 
 <style>
     p {
-        margin-bottom: 36px;
+        margin-bottom: 48px;
     }
 
     .contact {
@@ -100,16 +100,29 @@
     }
 
     .send-button {
-        background-color: var(--primary-color);
         color: var(--light-color);
-        padding: 14px 20px;
+        padding: 11px 20px;
         font-size: 16px;
-        font-weight: 400;
+        font-weight: 500;
         border: none;
         border-radius: 12px;
         width: auto;
         margin: 24px 0 0 auto;
         width: max-content;
+        border: 3px solid var(--primary-color);
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.176), 0 10px 12px rgba(0, 0, 0, 0.089);
+        background-size: 300%;
+        transition: background-position 0.6s;
+        background-image: linear-gradient(
+            90deg,
+            var(--primary-color) 50%,
+            var(--light-color) 50%
+        );
+    }
+
+    .send-button:hover {
+        color: var(--primary-color);
+        background-position: 100%;
     }
 
     .send-button:hover {
@@ -119,6 +132,12 @@
     @media screen and (min-width: 544px) {
         .contact {
             padding: 0 40px 80px;
+        }
+    }
+
+    @media screen and (min-width: 744px) {
+        .send-button {
+            font-size: 18px;
         }
     }
 
