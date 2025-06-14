@@ -3,7 +3,7 @@ import Arrow from "../atoms/arrow.astro";
 ---
 
 <section class="image-grid" id="image-grid">
-    <h2>Inside the charming apartment</h2>
+    <h2 class="image-grid-title">Inside the charming apartment</h2>
     <div class="grid">
         <img
             src="/images/lr-4.webp"
@@ -195,7 +195,45 @@ import Arrow from "../atoms/arrow.astro";
                 end: "65% 60%", // End wanneer sectie bijna uit view is
                 scrub: 1, // 🎯 KEY: Animatie volgt scrollpositie (1 sec delay)
                 // scrub: true,
-                markers: true, 
+                // markers: true,
+            },
+        });
+
+        // SplitType text splitting
+        const sectionTitle = new window.SplitType(".image-grid-title", {
+            types: "lines, words",
+            lineClass: "line",
+        });
+
+        // Create line wrappers voor masking
+        sectionTitle.lines.forEach((line) => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("line-wrapper-title");
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+
+            // Voeg reveal overlay toe
+            const overlay = document.createElement("div");
+            overlay.classList.add("section-reveal-overlay");
+            overlay.classList.add("texture-image");
+            wrapper.appendChild(overlay);
+        });
+
+        // Tekst op normale positie
+        window.gsap.to(".line", {
+            y: 0,
+        });
+
+
+        window.gsap.to(".section-reveal-overlay", {
+            x: "110%",
+            scrollTrigger: {
+                trigger: ".image-grid-title",
+                start: "top 90%",
+                end: "65% 60%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+                markers: true
             },
         });
 
@@ -207,7 +245,6 @@ import Arrow from "../atoms/arrow.astro";
             img.addEventListener("mouseenter", () => {
                 window.gsap.to(img, {
                     scale: 1.03,
-                    // rotation: 2,
                     duration: 0.3,
                     ease: "power2.out",
                 });
@@ -222,29 +259,6 @@ import Arrow from "../atoms/arrow.astro";
                 });
             });
         });
-
-        // ===================================
-        // 🎭 OPTIONEEL: H2 TITLE ANIMATIE
-        // ===================================
-
-        window.gsap.fromTo(
-            ".image-grid h2",
-            {
-                opacity: 0,
-                y: 30,
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".image-grid h2",
-                    start: "top 90%",
-                    toggleActions: "play none none reverse",
-                },
-            },
-        );
 
         // ===================================
         // 🎭 OPTIONEEL: BUTTON ANIMATIE
@@ -287,6 +301,17 @@ import Arrow from "../atoms/arrow.astro";
 </script>
 
 <style>
+    /* REVEAL OVERLAY */
+    :global(.section-reveal-overlay) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--light-color);
+        z-index: 2;
+        transform: translateX(0); /* Start positie: bedekt tekst */
+    }
     .image-grid {
         display: flex;
         flex-direction: column;
@@ -312,10 +337,10 @@ import Arrow from "../atoms/arrow.astro";
         grid-area: 3 / 1 / 4 / 2;
     }
     img:nth-child(3) {
-        grid-area: 4 / 1 / 5 / 2;
+        grid-area: 3 / 2 / 4 / 3;
     }
     img:nth-child(4) {
-        grid-area: 3 / 2 / 4 / 3;
+        grid-area: 4 / 1 / 5 / 2;
     }
     img:nth-child(5) {
         grid-area: 4 / 2 / 5 / 3;
@@ -697,15 +722,15 @@ import Arrow from "../atoms/arrow.astro";
         }
 
         img:nth-child(3) {
-            grid-area: 2 / 3 / 3 / 4;
+            grid-area: 1 / 4 / 2 / 5;
         }
 
         img:nth-child(4) {
-            grid-area: 2 / 4 / 3 / 5;
+            grid-area: 2 / 3 / 3 / 4;
         }
 
         img:nth-child(5) {
-            grid-area: 1 / 4 / 2 / 5;
+            grid-area: 2 / 4 / 3 / 5;
         }
     }
 

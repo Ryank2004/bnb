@@ -65,7 +65,7 @@ img {
 
 h1 {
     font-size: 36px;
-    line-height: 120%;
+    line-height: 110%;
 }
 
 h2 {
@@ -90,6 +90,18 @@ h2 {
     outline: 2px solid var(--secondairy-color);
     outline-offset: 3px;
     transition: outline-offset 0.2s ease;
+}
+
+ /* REVEAL OVERLAY */
+ .section-reveal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-color);
+    z-index: 2;
+    transform: translateX(0); /* Start positie: bedekt tekst */
 }
 
 @media screen and (min-width: 744px) {

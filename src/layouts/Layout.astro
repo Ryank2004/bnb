@@ -12,6 +12,8 @@ import Footer from "../components/molecules/footer.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Charming apartment</title>
 		<link rel="stylesheet" href="/css/global.css" />
+		<script src="https://cdn.jsdelivr.net/npm/split-type@latest" defer></script>
+
 	</head>
 	<body>
 		<BackgroundTexture />
@@ -22,64 +24,65 @@ import Footer from "../components/molecules/footer.astro";
 			import Lenis from "lenis";
 			import gsap from "gsap";
 			import { ScrollTrigger } from "gsap/ScrollTrigger";
-		
+
 			// Register GSAP plugins GLOBALLY
 			gsap.registerPlugin(ScrollTrigger);
-		
+
 			// Check user preferences
-			const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			
+			const prefersReducedMotion = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+
 			if (!prefersReducedMotion) {
-			  // Start Lenis na splash screen
-			  setTimeout(() => {
-				const lenis = new Lenis({
-				  duration: 1.5,
-				  easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-				//   smoothTouch: false, // Uit op mobile voor performance
-				  touchMultiplier: 2,
-				});
-		
-				// KRITIEKE KOPPELING: Lenis ↔ ScrollTrigger
-				lenis.on('scroll', ScrollTrigger.update);
-		
-				function raf(time: number) {
-				  lenis.raf(time);
-				  requestAnimationFrame(raf);
-				}
-		
-				requestAnimationFrame(raf);
-		
-				// MAAK GSAP + LENIS GLOBAAL BESCHIKBAAR
-				window.lenis = lenis;
+				// Start Lenis na splash screen
+				setTimeout(() => {
+					const lenis = new Lenis({
+						duration: 1.5,
+						easing: (t: number) =>
+							Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+						//   smoothTouch: false, // Uit op mobile voor performance
+						touchMultiplier: 2,
+					});
+
+					// KRITIEKE KOPPELING: Lenis ↔ ScrollTrigger
+					lenis.on("scroll", ScrollTrigger.update);
+
+					function raf(time: number) {
+						lenis.raf(time);
+						requestAnimationFrame(raf);
+					}
+
+					requestAnimationFrame(raf);
+
+					// MAAK GSAP + LENIS GLOBAAL BESCHIKBAAR
+					window.lenis = lenis;
+					window.gsap = gsap;
+					window.ScrollTrigger = ScrollTrigger;
+					window.lenisReady = true;
+
+					// Trigger event voor components
+					document.dispatchEvent(new CustomEvent("lenisReady"));
+
+					console.log("✅ Lenis + GSAP globally initialized");
+				}, 1350); // Match splash screen timing
+			} else {
+				// Fallback voor reduced motion
+				document.documentElement.style.scrollBehavior = "smooth";
 				window.gsap = gsap;
 				window.ScrollTrigger = ScrollTrigger;
 				window.lenisReady = true;
-				
-				// Trigger event voor components
-				document.dispatchEvent(new CustomEvent('lenisReady'));
-		
-				console.log('✅ Lenis + GSAP globally initialized');
-		
-			  }, 1800); // Match splash screen timing
-		
-			} else {
-			  // Fallback voor reduced motion
-			  document.documentElement.style.scrollBehavior = 'smooth';
-			  window.gsap = gsap;
-			  window.ScrollTrigger = ScrollTrigger;
-			  window.lenisReady = true;
-			  document.dispatchEvent(new CustomEvent('lenisReady'));
+				document.dispatchEvent(new CustomEvent("lenisReady"));
 			}
-		
+
 			// TypeScript declarations
 			declare global {
-			  interface Window {
-				lenis: any;
-				gsap: any;
-				ScrollTrigger: any;
-				lenisReady: boolean;
-			  }
+				interface Window {
+					lenis: any;
+					gsap: any;
+					ScrollTrigger: any;
+					lenisReady: boolean;
+				}
 			}
-		  </script>
+		</script>
 	</body>
 </html>
