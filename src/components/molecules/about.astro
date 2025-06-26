@@ -127,11 +127,76 @@ import Arrow from "../atoms/arrow.astro";
             hideOverlay();
         }
     });
+
+    // Voeg dit toe aan je bestaande script sectie, bijvoorbeeld na je overlay code
+    function initTextColorAnimation() {
+        if (!window.gsap) {
+            setTimeout(initTextColorAnimation, 100);
+            return;
+        }
+
+        // Animeer de background-position van de tekst op scroll
+        window.gsap.to(".about p", {
+            backgroundPositionX: "0%", // Eindigt nu links (0%)
+            duration: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".about",
+                start: "-20% 80%",
+                end: "50% 60%",
+                scrub: 1, // Smooth scroll koppeling
+                // markers: true,
+            },
+        });
+
+        window.gsap.fromTo(
+            ".text-btn",
+            {
+                opacity: 0,
+                y: 20,
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                delay: 0.5, // Kleine delay na images
+                scrollTrigger: {
+                    trigger: ".text-btn",
+                    start: "20% 90%",
+                    toggleActions: "play none none reverse",
+                },
+            },
+        );
+    }
+
+    // Luister naar lenisReady event
+    document.addEventListener("lenisReady", initTextColorAnimation);
+
+    // Fallback als event al afgevuurd is
+    if (window.lenisReady) {
+        initTextColorAnimation();
+    }
 </script>
 
 <style>
     .about {
         padding: 0 25px;
+    }
+
+    .about p {
+        background-size: 300% 100%;
+        background-image: linear-gradient(
+            90deg,
+            var(--dark-color) 50%,
+            /* Houd originele volgorde */ var(--medium-dark-color) 50%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-position-x: 100%; /* Start rechts (lichte kleur zichtbaar) */
+        transition: background-position-x 0.2s ease;
+        font-weight: 500;
     }
 
     .text-btn {
@@ -150,7 +215,7 @@ import Arrow from "../atoms/arrow.astro";
     }
 
     .text-btn:hover {
-        opacity: .7;
+        opacity: 0.7;
     }
 
     .text-btn:hover > span {
