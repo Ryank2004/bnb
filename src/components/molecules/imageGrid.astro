@@ -3,38 +3,52 @@ import Arrow from "../atoms/arrow.astro";
 ---
 
 <section class="image-grid" id="image-grid">
-    <h2>Inside the charming apartment</h2>
+    <h2 class="image-grid-title">Inside the charming apartment</h2>
     <div class="grid">
-        <img
-            src="/images/lr-4.webp"
-            alt="Living room"
-            loading="lazy"
-            class="thumb"
-        />
-        <img
-            src="/images/bathroom-2.webp"
-            alt="Bathroom"
-            loading="lazy"
-            class="thumb"
-        />
-        <img
-            src="/images/bedroom1-1.webp"
-            alt="Bedroom"
-            loading="lazy"
-            class="thumb"
-        />
-        <img
-            src="/images/bedroom1-2.webp"
-            alt="Bedroom"
-            loading="lazy"
-            class="thumb"
-        />
-        <img
-            src="/images/garden-1.webp"
-            alt="Garden"
-            loading="lazy"
-            class="thumb"
-        />
+        <div class="image-wrapper">
+            <img
+                src="/images/lr-4.webp"
+                alt="Living room"
+                loading="lazy"
+                class="thumb"
+            />
+        </div>
+
+        <div class="image-wrapper">
+            <img
+                src="/images/bathroom-2.webp"
+                alt="Bathroom"
+                loading="lazy"
+                class="thumb"
+            />
+        </div>
+
+        <div class="image-wrapper">
+            <img
+                src="/images/bedroom1-1.webp"
+                alt="Bedroom"
+                loading="lazy"
+                class="thumb"
+            />
+        </div>
+
+        <div class="image-wrapper">
+            <img
+                src="/images/bedroom1-2.webp"
+                alt="Bedroom"
+                loading="lazy"
+                class="thumb"
+            />
+        </div>
+
+        <div class="image-wrapper">
+            <img
+                src="/images/garden-1.webp"
+                alt="Garden"
+                loading="lazy"
+                class="thumb"
+            />
+        </div>
     </div>
 
     <!-- Lightbox overlay -->
@@ -57,7 +71,72 @@ import Arrow from "../atoms/arrow.astro";
         </button>
         <img id="lightbox-img" alt="" />
     </div>
-    <a href="/" class="see-more-btn">show all photos <span><Arrow /></span></a>
+
+    <!-- Volledige galerij overlay -->
+    <div id="full-gallery" class="full-gallery" data-lenis-prevent>
+        <div class="gallery-header">
+            <button id="gallery-back" class="gallery-back">
+                <span><Arrow /></span> Back to overview
+            </button>
+        </div>
+
+        <div class="gallery-content">
+            <h3>Living room</h3>
+            <div class="grid-container">
+                <img src="/images/lr-1.webp" alt="Living room" />
+                <img src="/images/lr-2.webp" alt="Living room" />
+                <img src="/images/lr-3.webp" alt="Living room" />
+                <img src="/images/lr-4.webp" alt="Living room" />
+                <img src="/images/lr-5.webp" alt="Living room" />
+                <img src="/images/lr-6.webp" alt="Living room" />
+            </div>
+
+            <h3>Bedroom 1</h3>
+            <div class="grid-container">
+                <img src="/images/bedroom1-1.webp" alt="Bedroom 1" />
+                <img src="/images/bedroom1-2.webp" alt="Bedroom 1" />
+                <img src="/images/bedroom1-3.webp" alt="Bedroom 1" />
+            </div>
+
+            <h3>Bedroom 2</h3>
+            <div class="grid-container">
+                <img src="/images/bedroom2-1.webp" alt="Bedroom 2" />
+                <img src="/images/bedroom2-3.webp" alt="Bedroom 2" />
+                <img src="/images/bedroom2-2.webp" alt="Bedroom 2" />
+            </div>
+
+            <h3>Bathroom</h3>
+            <div class="grid-container">
+                <img src="/images/bathroom-1.webp" alt="Bathroom" />
+                <img src="/images/bathroom-2.webp" alt="Bathroom" />
+                <img src="/images/bathroom-2.webp" alt="Bathroom" />
+            </div>
+
+            <h3>Garden</h3>
+            <div class="grid-container">
+                <img src="/images/garden-1.webp" alt="Garden" />
+                <img src="/images/garden-2.webp" alt="Garden" />
+            </div>
+
+            <h3>Kitchen</h3>
+            <div class="grid-container">
+                <img src="/images/kitchen-1.webp" alt="Kitchen" />
+                <img src="/images/kitchen-2.webp" alt="Kitchen" />
+                <img src="/images/kitchen-3.webp" alt="Kitchen" />
+            </div>
+
+            <h3>Entrance</h3>
+            <div class="grid-container">
+                <img src="/images/entrance-1.webp" alt="Entrance" />
+                <img src="/images/entrance-2.webp" alt="Entrance" />
+            </div>
+        </div>
+    </div>
+
+    <button class="see-more-btn" id="show-all-btn">
+        show all photos <span><Arrow /></span>
+    </button>
+    <!-- <a href="/" class="see-more-btn">show all photos <span><Arrow /></span></a> -->
 </section>
 
 <script is:inline>
@@ -65,6 +144,9 @@ import Arrow from "../atoms/arrow.astro";
     const lb = document.getElementById("lightbox");
     const lbImg = document.getElementById("lightbox-img");
     const closeBtn = document.getElementById("lightbox-close");
+    const showAllBtn = document.getElementById("show-all-btn");
+    const fullGallery = document.getElementById("full-gallery");
+    const galleryBack = document.getElementById("gallery-back");
 
     thumbs.forEach((img) => {
         img.addEventListener("click", () => {
@@ -81,13 +163,172 @@ import Arrow from "../atoms/arrow.astro";
     closeBtn.addEventListener("click", () => {
         lb.classList.remove("active");
     });
+
+    // Show all photos functionaliteit
+    showAllBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        fullGallery.classList.add("active");
+        document.body.style.overflow = "hidden"; // Voorkom body scroll
+    });
+
+    galleryBack.addEventListener("click", () => {
+        fullGallery.classList.remove("active");
+        document.body.style.overflow = ""; // Herstel body scroll
+    });
+
+    // Wacht tot GSAP en Lenis klaar zijn
+    function initImageGridAnimations() {
+        if (!window.lenisReady || !window.gsap) {
+            setTimeout(initImageGridAnimations, 100);
+            return;
+        }
+
+        console.log("🎨 Starting image grid animations...");
+
+        // ===================================
+        // 🎭 SCROLL-BASED OPACITY STAGGER
+        // ===================================
+
+        // Set initial state - alleen opacity
+        window.gsap.set(".image-wrapper", {
+            opacity: 0,
+        });
+
+        // Scroll-based stagger animatie (linked aan scrollpositie)
+        window.gsap.to(".image-wrapper", {
+            opacity: 1,
+            duration: 1,
+            stagger: {
+                amount: 0.8, // Stagger duur: 0.8 seconden
+                from: "start", // Start met eerste image
+                ease: "none", // Linear voor smooth scroll sync
+            },
+            scrollTrigger: {
+                trigger: ".image-grid",
+                start: "30% 85%", // Start wanneer sectie in view komt
+                end: "65% 60%", // End wanneer sectie bijna uit view is
+                scrub: 1, // 🎯 KEY: Animatie volgt scrollpositie (1 sec delay)
+                // scrub: true,
+                // markers: true,
+            },
+        });
+
+        // SplitType text splitting
+        const sectionTitle = new window.SplitType(".image-grid-title", {
+            types: "lines, words",
+            lineClass: "line",
+        });
+
+        // Create line wrappers voor masking
+        sectionTitle.lines.forEach((line) => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("line-wrapper-title");
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+
+            // Voeg reveal overlay toe
+            const overlay = document.createElement("div");
+            overlay.classList.add("section-reveal-overlay");
+            overlay.classList.add("texture-image");
+            wrapper.appendChild(overlay);
+        });
+
+        // Tekst op normale positie
+        window.gsap.to(".line", {
+            y: 0,
+        });
+
+        window.gsap.to(".section-reveal-overlay", {
+            x: "110%",
+            scrollTrigger: {
+                trigger: ".image-grid-title",
+                start: "top 90%",
+                end: "65% 60%",
+                toggleActions: "play none none reverse",
+                scrub: 1,
+                // markers: true,
+            },
+        });
+
+        // ===================================
+        // 🎨 HOVER ANIMATIES
+        // ===================================
+
+        document.querySelectorAll(".thumb").forEach((img) => {
+            img.addEventListener("mouseenter", () => {
+                window.gsap.to(img, {
+                    scale: 1.06,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            });
+
+            img.addEventListener("mouseleave", () => {
+                window.gsap.to(img, {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                });
+            });
+        });
+
+        // ===================================
+        // 🎭 OPTIONEEL: BUTTON ANIMATIE
+        // ===================================
+
+        window.gsap.fromTo(
+            ".see-more-btn",
+            {
+                opacity: 0,
+                y: 20,
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "power2.out",
+                delay: 0.3, // Kleine delay na images
+                scrollTrigger: {
+                    trigger: ".see-more-btn",
+                    start: "top 90%",
+                    toggleActions: "play none none reverse",
+                },
+            },
+        );
+
+        console.log("✅ Image grid animations initialized");
+    }
+
+    // ===================================
+    // 🚀 START ANIMATIES
+    // ===================================
+
+    // Luister naar lenisReady event
+    document.addEventListener("lenisReady", initImageGridAnimations);
+
+    // Fallback als event al afgevuurd is
+    if (window.lenisReady) {
+        initImageGridAnimations();
+    }
 </script>
 
 <style>
+    /* REVEAL OVERLAY */
+    :global(.section-reveal-overlay) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--light-color);
+        z-index: 2;
+        transform: translateX(0); /* Start positie: bedekt tekst */
+    }
     .image-grid {
         display: flex;
         flex-direction: column;
-        padding: 160px 25px;
+        padding: 200px 25px;
     }
 
     .grid {
@@ -98,23 +339,24 @@ import Arrow from "../atoms/arrow.astro";
         grid-row-gap: 12px;
     }
 
-    img {
+    .image-wrapper {
         border: solid 1.5px var(--primary-color);
+        overflow: hidden;
     }
 
-    img:nth-child(1) {
+    .image-wrapper:nth-child(1) {
         grid-area: 1 / 1 / 3 / 3;
     }
-    img:nth-child(2) {
+    .image-wrapper:nth-child(2) {
         grid-area: 3 / 1 / 4 / 2;
     }
-    img:nth-child(3) {
-        grid-area: 4 / 1 / 5 / 2;
-    }
-    img:nth-child(4) {
+    .image-wrapper:nth-child(3) {
         grid-area: 3 / 2 / 4 / 3;
     }
-    img:nth-child(5) {
+    .image-wrapper:nth-child(4) {
+        grid-area: 4 / 1 / 5 / 2;
+    }
+    .image-wrapper:nth-child(5) {
         grid-area: 4 / 2 / 5 / 3;
     }
 
@@ -171,6 +413,204 @@ import Arrow from "../atoms/arrow.astro";
         outline: 2px solid #fff;
     }
 
+    .full-gallery {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--light-color);
+        z-index: 2000;
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0, 0, 0.47, 1) 0.25s;
+        box-shadow:
+            0 19px 38px rgba(0, 0, 0, 0.3),
+            0 10px 12px rgba(0, 0, 0, 0.22);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .full-gallery.active {
+        transform: translateX(0);
+    }
+
+    .gallery-header {
+        display: flex;
+        align-items: center;
+        padding: 20px 25px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    h3 {
+        font-size: 28px;
+        margin: 120px 0 16px;
+    }
+
+    .full-gallery h3 {
+        position: sticky;
+        top: 120px;
+        background: var(--light-color); /* Achtergrond voor overlap */
+        z-index: 10;
+        padding: 16px 0;
+    }
+
+    h3:nth-of-type(1) {
+        margin: 0 0 16px;
+    }
+
+    .gallery-back {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        border: none;
+        color: var(--primary-color);
+        cursor: pointer;
+        font-size: 16px;
+        padding: 8px 0;
+        margin-right: 20px;
+    }
+
+    .gallery-back span {
+        transform: rotate(90deg);
+        margin-right: 6px;
+    }
+
+    .gallery-back:hover {
+        opacity: 0.7;
+    }
+
+    .gallery-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .gallery-content {
+        padding: 40px 25px 120px;
+    }
+
+    .grid-container {
+        gap: 12px;
+    }
+
+    .grid-container img {
+        border: solid 1.5px var(--primary-color);
+    }
+
+    .grid-container:nth-of-type(1) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    .grid-container:nth-of-type(1) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 3;
+    }
+    .grid-container:nth-of-type(1) img:nth-of-type(2) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+    .grid-container:nth-of-type(1) img:nth-of-type(3) {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+    .grid-container:nth-of-type(1) img:nth-of-type(4) {
+        grid-area: 4 / 1 / 6 / 3;
+    }
+    .grid-container:nth-of-type(1) img:nth-of-type(5) {
+        grid-area: 6 / 1 / 7 / 2;
+    }
+    .grid-container:nth-of-type(1) img:nth-of-type(6) {
+        grid-area: 6 / 2 / 7 / 3;
+    }
+
+    .grid-container:nth-of-type(2) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    .grid-container:nth-of-type(2) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 3;
+    }
+    .grid-container:nth-of-type(2) img:nth-of-type(2) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+    .grid-container:nth-of-type(2) img:nth-of-type(3) {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+
+    .grid-container:nth-of-type(3) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    .grid-container:nth-of-type(3) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 3;
+    }
+    .grid-container:nth-of-type(3) img:nth-of-type(2) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+    .grid-container:nth-of-type(3) img:nth-of-type(3) {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+
+    .grid-container:nth-of-type(4) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    .grid-container:nth-of-type(4) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 3;
+    }
+    .grid-container:nth-of-type(4) img:nth-of-type(2) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+    .grid-container:nth-of-type(4) img:nth-of-type(3) {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+
+    .grid-container:nth-of-type(5) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+    }
+
+    .grid-container:nth-of-type(5) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    .grid-container:nth-of-type(5) img:nth-of-type(2) {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+
+    .grid-container:nth-of-type(6) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    .grid-container:nth-of-type(6) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 3;
+    }
+    .grid-container:nth-of-type(6) img:nth-of-type(2) {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+    .grid-container:nth-of-type(6) img:nth-of-type(3) {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+
+    .grid-container:nth-of-type(7) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+    }
+
+    .grid-container:nth-of-type(7) img:nth-of-type(1) {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    .grid-container:nth-of-type(7) img:nth-of-type(2) {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+
     .see-more-btn {
         display: inline-flex;
         color: var(--primary-color);
@@ -179,6 +619,8 @@ import Arrow from "../atoms/arrow.astro";
         align-items: center;
         margin-left: auto;
         margin-right: 4px;
+        border: none;
+        background-color: transparent;
     }
 
     .see-more-btn span {
@@ -187,8 +629,12 @@ import Arrow from "../atoms/arrow.astro";
         transition: transform 0.5s ease;
     }
 
+    .see-more-btn:hover {
+        opacity: 0.7;
+    }
+
     .see-more-btn:hover > span {
-        transform:  rotate(0deg);
+        transform: rotate(0deg);
     }
 
     .see-more-btn:hover {
@@ -199,35 +645,118 @@ import Arrow from "../atoms/arrow.astro";
         .image-grid {
             padding: 160px 40px;
         }
+
+        .gallery-content {
+            padding: 80px 40px 160px;
+        }
     }
 
     @media screen and (min-width: 744px) {
+        .gallery-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Kolom 1 smaller, kolom 2 bigger */
+            grid-template-rows: repeat(
+                7,
+                auto
+            ); /* Auto height based on content */
+            gap: 180px;
+            align-items: start; /* Align items to top */
+        }
+
+        /* FIX: Gebruik nth-of-type in plaats van nth-last-of-type */
+
+        /* EERSTE ROW */
+        h3:nth-of-type(1) {
+            grid-area: 1 / 1 / 2 / 2; /* Row 1, kolom 1 */
+        }
+        .grid-container:nth-of-type(1) {
+            grid-area: 1 / 2 / 2 / 3; /* Row 1, kolom 2 */
+        }
+
+        /* TWEEDE ROW */
+        h3:nth-of-type(2) {
+            grid-area: 2 / 1 / 3 / 2; /* Row 2, kolom 1 */
+        }
+        .grid-container:nth-of-type(2) {
+            grid-area: 2 / 2 / 3 / 3; /* Row 2, kolom 2 */
+        }
+
+        /* DERDE ROW */
+        h3:nth-of-type(3) {
+            grid-area: 3 / 1 / 4 / 2; /* Row 3, kolom 1 */
+        }
+        .grid-container:nth-of-type(3) {
+            grid-area: 3 / 2 / 4 / 3; /* Row 3, kolom 2 */
+        }
+
+        /* VIERDE ROW */
+        h3:nth-of-type(4) {
+            grid-area: 4 / 1 / 5 / 2; /* Row 4, kolom 1 */
+        }
+        .grid-container:nth-of-type(4) {
+            grid-area: 4 / 2 / 5 / 3; /* Row 4, kolom 2 */
+        }
+
+        /* VIJFDE ROW */
+        h3:nth-of-type(5) {
+            grid-area: 5 / 1 / 6 / 2; /* Row 5, kolom 1 */
+        }
+        .grid-container:nth-of-type(5) {
+            grid-area: 5 / 2 / 6 / 3; /* Row 5, kolom 2 */
+        }
+
+        /* ZESDE ROW */
+        h3:nth-of-type(6) {
+            grid-area: 6 / 1 / 7 / 2; /* Row 6, kolom 1 */
+        }
+        .grid-container:nth-of-type(6) {
+            grid-area: 6 / 2 / 7 / 3; /* Row 6, kolom 2 */
+        }
+
+        /* ZEVENDE ROW */
+        h3:nth-of-type(7) {
+            grid-area: 7 / 1 / 8 / 2; /* Row 7, kolom 1 */
+        }
+        .grid-container:nth-of-type(7) {
+            grid-area: 7 / 2 / 8 / 3; /* Row 7, kolom 2 */
+        }
+
+        /* Reset h3 margins voor grid layout */
+        h3 {
+            margin: 0;
+            font-size: 32px;
+            line-height: 1;
+        }
+
+        .grid-container {
+            gap: 18px;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            grid-column-gap: 12px;
-            grid-row-gap: 12px;
+            gap: 12px;
         }
 
-        img:nth-child(1) {
+        .image-wrapper:nth-child(1) {
             grid-area: 1 / 1 / 3 / 3;
         }
 
-        img:nth-child(2) {
+        .image-wrapper:nth-child(2) {
             grid-area: 1 / 3 / 2 / 4;
         }
 
-        img:nth-child(3) {
+        .image-wrapper:nth-child(3) {
+            grid-area: 1 / 4 / 2 / 5;
+        }
+
+        .image-wrapper:nth-child(4) {
             grid-area: 2 / 3 / 3 / 4;
         }
 
-        img:nth-child(4) {
+        .image-wrapper:nth-child(5) {
             grid-area: 2 / 4 / 3 / 5;
-        }
-
-        img:nth-child(5) {
-            grid-area: 1 / 4 / 2 / 5;
         }
     }
 
@@ -235,11 +764,35 @@ import Arrow from "../atoms/arrow.astro";
         .image-grid {
             padding: 160px 80px;
         }
+
+        .gallery-content {
+            padding: 60px 80px 160px;
+        }
+
+        h3 {
+            font-size: 36px;
+        }
+
+        .grid-container {
+            gap: 20px;
+        }
     }
 
     @media screen and (min-width: 1224px) {
         .image-grid {
             padding: 240px 120px;
+        }
+
+        .gallery-content {
+            padding: 60px 120px 240px;
+        }
+
+        h3 {
+            font-size: 40px;
+        }
+
+        .grid-container {
+            gap: 24px;
         }
     }
 

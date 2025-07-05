@@ -28,54 +28,75 @@ import Arrow from "../atoms/arrow.astro";
                 ></path>
             </svg>
         </button>
-        <div class="text-container">
+        <div class="text-container" data-lenis-prevent>
+            <h2>About the space</h2>
             <p>
                 This beautiful nineteenth-century dike house is located 15
                 minutes from Central Station. This apartment is located here,
-                which covers 45 m2 and has been completely renovated. It is an
-                old house, so it is a bit noisy. It consists of a double bedroom
-                with an electrically adjustable bed and a flat-screen TV.
-                Furthermore, a living room with a pleasant sitting area and a
-                dining table. There is a cozy box bed (double bed) in the living
-                room. The designer bathroom has an XXL bath and a walk-in
-                shower. There is a separate toilet. The apartment has its own
+                which covers 45 m2 and has been completely renovated.
+            </p>
+            <br />
+            <p>
+                It is an old house, so it is a bit noisy. It consists of a
+                double bedroom with an electrically adjustable bed and a
+                flat-screen TV. Furthermore, a living room with a pleasant
+                sitting area and a dining table. There is a cozy box bed (double
+                bed) in the living room.
+            </p>
+            <br />
+            <p>
+                The designer bathroom has an XXL bath and a walk-in shower.
+                There is a separate toilet. The apartment has its own
                 emergency/exit via the back. It has a Nespresso machine and a
                 kettle, a refrigerator and all the necessities to make
                 breakfast. There is a sink to do the dishes. Hot food cannot be
                 made and I am allowed to host a maximum of 4 people. This is due
                 to my permit.
-                <br />
-                The house is located on the monumental Nieuwendammerdijk, one of
-                the top locations in Amsterdam. In the beautiful Vliegenbos, a 5-minute
-                walk away, there is a tennis club. On the way you will pass Het Sluisje,
-                a well-known café among Amsterdammers with a beautiful terrace where
-                you can also eat.
-                <br />
-                From the house you can cycle to the ferry in 12 minutes, which takes
-                you to Central Station in 3 minutes. From there you are within walking
-                distance of all the major attractions that Amsterdam city center
-                has to offer. Of course you can also take the bus to the metro, it
-                leaves every 10 minutes around the corner and takes you to the metro
-                in 5 minutes, the metro takes you anywhere in the city within 15
-                minutes, Amsterdam is after all a small city everything is close
-                by. For those who prefer peace and quiet, the Nieuwendammerdijk is
-                the ideal base for the rustic North Holland Waterland. Tourist attractions
-                such as Durgerdam, Volendam and Marken are within cycling distance.
-                Best of both worlds, the city center is close by and so is the countryside.
-                <br />
-                The owner lives in the upper house. together with his 20 year old
-                son and their cat. It is paid parking the costs are €9.90 per day.
-                Or €1.60 per hour
-                <br />
-                Finally: anyone arriving at Schiphol can be picked up by the owner,
-                ask for information about this. Guest access you have all the space
-                for you and the rest of the guests. Only sometimes I have to use
-                the washing machine. But I will talk to you first if I would use
-                it if necessary Other things to look out for Violating the house
-                rules will result in a fine of €
-                <br />
-                Registration number 03637B6FE171C6D89CC8
             </p>
+            <br />
+            <p>
+                The house is located on the monumental Nieuwendammerdijk, one of
+                the top locations in Amsterdam. In the beautiful Vliegenbos, a
+                5-minute walk away, there is a tennis club. On the way you will
+                pass Het Sluisje, a well-known café among Amsterdammers with a
+                beautiful terrace where you can also eat.
+            </p>
+            <br />
+            <p>
+                From the house you can cycle to the ferry in 12 minutes, which
+                takes you to Central Station in 3 minutes. From there you are
+                within walking distance of all the major attractions that
+                Amsterdam city center has to offer.
+            </p>
+            <br />
+            <p>
+                Of course you can also take the bus to the metro, it leaves
+                every 10 minutes around the corner and takes you to the metro in
+                5 minutes, the metro takes you anywhere in the city within 15
+                minutes, Amsterdam is after all a small city everything is close
+                by. For those who prefer peace and quiet, the Nieuwendammerdijk
+                is the ideal base for the rustic North Holland Waterland.
+                Tourist attractions such as Durgerdam, Volendam and Marken are
+                within cycling distance. Best of both worlds, the city center is
+                close by and so is the countryside.
+            </p>
+            <br />
+            <p>
+                The owner lives in the upper house. together with his 20 year
+                old son and their cat. It is paid parking the costs are €9.90
+                per day. Or €1.60 per hour
+            </p>
+            <br />
+            <p>
+                Finally: anyone arriving at Schiphol can be picked up by the
+                owner, ask for information about this. Guest access you have all
+                the space for you and the rest of the guests. Only sometimes I
+                have to use the washing machine. But I will talk to you first if
+                I would use it if necessary Other things to look out for
+                Violating the house rules will result in a fine of €
+            </p>
+            <br />
+            <p>Registration number 03637B6FE171C6D89CC8</p>
         </div>
     </div>
 </section>
@@ -106,11 +127,76 @@ import Arrow from "../atoms/arrow.astro";
             hideOverlay();
         }
     });
+
+    // Voeg dit toe aan je bestaande script sectie, bijvoorbeeld na je overlay code
+    function initTextColorAnimation() {
+        if (!window.gsap) {
+            setTimeout(initTextColorAnimation, 100);
+            return;
+        }
+
+        // Animeer de background-position van de tekst op scroll
+        window.gsap.to(".about p", {
+            backgroundPositionX: "0%", // Eindigt nu links (0%)
+            duration: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".about",
+                start: "-20% 80%",
+                end: "50% 60%",
+                scrub: 1, // Smooth scroll koppeling
+                // markers: true,
+            },
+        });
+
+        window.gsap.fromTo(
+            ".text-btn",
+            {
+                opacity: 0,
+                y: 20,
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                delay: 0.5, // Kleine delay na images
+                scrollTrigger: {
+                    trigger: ".text-btn",
+                    start: "20% 90%",
+                    toggleActions: "play none none reverse",
+                },
+            },
+        );
+    }
+
+    // Luister naar lenisReady event
+    document.addEventListener("lenisReady", initTextColorAnimation);
+
+    // Fallback als event al afgevuurd is
+    if (window.lenisReady) {
+        initTextColorAnimation();
+    }
 </script>
 
 <style>
     .about {
         padding: 0 25px;
+    }
+
+    .about p {
+        background-size: 300% 100%;
+        background-image: linear-gradient(
+            90deg,
+            var(--dark-color) 50%,
+            /* Houd originele volgorde */ var(--medium-dark-color) 50%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-position-x: 100%; /* Start rechts (lichte kleur zichtbaar) */
+        transition: background-position-x 0.2s ease;
+        font-weight: 500;
     }
 
     .text-btn {
@@ -126,6 +212,10 @@ import Arrow from "../atoms/arrow.astro";
         display: inline-flex;
         transform: rotate(-90deg);
         transition: transform 0.5s ease;
+    }
+
+    .text-btn:hover {
+        opacity: 0.7;
     }
 
     .text-btn:hover > span {
@@ -173,38 +263,12 @@ import Arrow from "../atoms/arrow.astro";
     }
 
     .text-container {
-        height: 500px;
+        height: 80dvh;
         overflow-y: scroll;
         padding: 25px 32px;
         margin: 0 25px;
-        border-radius: 14px 0 0 14px;
+        border-radius: 14px;
         background-color: var(--light-color);
-    }
-
-    /* Voor alle webkit browsers */
-    .text-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    .text-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    .text-container::-webkit-scrollbar-thumb {
-        background: var(--primary-color);
-    }
-    .text-container::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    /* Safari-specifieke aanpassing */
-    .text-container {
-        scrollbar-width: thin; /* Voor Firefox */
-        scrollbar-color: var(--primary-color) #f1f1f1; /* Voor Firefox */
-    }
-
-    /* Safari scrollbar altijd zichtbaar maken */
-    .text-container::-webkit-scrollbar {
-        -webkit-appearance: none;
-        width: 8px;
     }
 
     .textbox p {
@@ -221,10 +285,67 @@ import Arrow from "../atoms/arrow.astro";
         outline: 2px solid #fff;
     }
 
+    /* Animatie voor tekst elementen */
+    .text-container h2,
+    .text-container p {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity 0.4s ease-out,
+            transform 0.4s ease-out;
+    }
+
+    /* Wanneer textbox active is, animeer de tekst elementen */
+    .textbox.active .text-container h2 {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s; /* Start na textbox fade-in */
+    }
+
+    .textbox.active .text-container p {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Staggered effect voor paragrafen */
+    .textbox.active .text-container p:nth-child(2) {
+        transition-delay: 0.15s;
+    }
+    .textbox.active .text-container p:nth-child(4) {
+        transition-delay: 0.2s;
+    }
+    .textbox.active .text-container p:nth-child(6) {
+        transition-delay: 0.25s;
+    }
+    .textbox.active .text-container p:nth-child(8) {
+        transition-delay: 0.3s;
+    }
+    .textbox.active .text-container p:nth-child(10) {
+        transition-delay: 0.35s;
+    }
+    .textbox.active .text-container p:nth-child(12) {
+        transition-delay: 0.4s;
+    }
+    .textbox.active .text-container p:nth-child(14) {
+        transition-delay: 0.45s;
+    }
+    .textbox.active .text-container p:nth-child(16) {
+        transition-delay: 0.5s;
+    }
+    .textbox.active .text-container p:nth-child(18) {
+        transition-delay: 0.55s;
+    }
+
     @media screen and (min-width: 544px) {
         .about {
             padding: 0 40px;
             max-width: 90%;
+        }
+
+        .text-container {
+            margin: 0 40px;
+            padding: 32px 40px;
+            border-radius: 18px;
         }
     }
 
@@ -234,11 +355,23 @@ import Arrow from "../atoms/arrow.astro";
             border-right: solid 1.5px var(--primary-color);
             max-width: 40%;
         }
+
+        .text-container {
+            margin: 0 80px;
+            padding: 40px 50px;
+            border-radius: 20px;
+        }
     }
 
     @media screen and (min-width: 1224px) {
         .about {
             padding: 0 50px 0 120px;
+        }
+
+        .text-container {
+            margin: 0 120px;
+            padding: 50px 64px;
+            border-radius: 24px;
         }
     }
 

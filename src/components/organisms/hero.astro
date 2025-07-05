@@ -13,9 +13,13 @@ import Reviews from "../atoms/reviews.astro";
         >
     </div>
     <div class="hero-content">
-        <ImageSlider />
+        <div class="image-slider-container">
+            <ImageSlider />
+        </div>
         <div class="hero-text">
-            <h1>Charming Apartment: Moments from Central Amsterdam</h1>
+            <h1 class="hero-title">
+                Charming Apartment: Moments from Central Amsterdam
+            </h1>
             <p>
                 A cozy 19th-century retreat on the historic Nieuwendammerdijk.
                 Relax in vintage comfort with a spacious bath and unique
@@ -27,6 +31,151 @@ import Reviews from "../atoms/reviews.astro";
         </div>
     </div>
 </section>
+
+<script is:inline>
+    function initHeroAnimation() {
+        if (!window.lenisReady || !window.gsap || !window.SplitType) {
+            setTimeout(initHeroAnimation, 100);
+            return;
+        }
+
+        console.log("🎭 Starting complete hero animations...");
+
+        // ===================================
+        // 🎯 TEXT REVEAL ANIMATIE (bestaande code)
+        // ===================================
+
+        // SplitType text splitting
+        const animatingTitle = new window.SplitType(".hero-title", {
+            types: "lines, words",
+            lineClass: "line",
+        });
+
+        // Create line wrappers voor masking
+        animatingTitle.lines.forEach((line) => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("line-wrapper-title");
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+
+            // Voeg reveal overlay toe
+            const overlay = document.createElement("div");
+            overlay.classList.add("reveal-overlay");
+            overlay.classList.add("texture-image");
+            wrapper.appendChild(overlay);
+        });
+
+        // Maak titel zichtbaar
+        window.gsap.set(".hero-title", {
+            opacity: 1,
+            visibility: "visible",
+        });
+
+        // Tekst op normale positie
+        window.gsap.set(".line", {
+            y: 0,
+        });
+
+        // ===================================
+        // 🎬 SET INITIAL STATES (alle elementen onzichtbaar)
+        // ===================================
+
+        // ImageSlider - start transparant
+        window.gsap.set(".hero-content > *:first-child", {
+            opacity: 0,
+        });
+
+        // Reviews en Airbnb button - start boven scherm
+        window.gsap.set(".airbnb-container > *", {
+            opacity: 0,
+            y: -30,
+        });
+
+        // Paragraph met link - start onder scherm
+        window.gsap.set(".hero-text p", {
+            opacity: 0,
+            y: 30,
+        });
+
+        // ===================================
+        // 🎭 ANIMATIE TIMELINE
+        // ===================================
+
+        // Master timeline voor alle animaties
+        const heroTimeline = window.gsap.timeline({
+            delay: 0.2, // Start delay na splash screen
+        });
+
+        // 1. TEXT REVEAL (0s - 1.1s)
+        heroTimeline.to(
+            ".reveal-overlay",
+            {
+                x: "110%",
+                duration: 1.2,
+                ease: "power3.out",
+                stagger: {
+                    amount: 0.3,
+                    from: "start",
+                },
+            },
+            0,
+        );
+
+        // 2. REVIEWS & AIRBNB BUTTON - van boven invliegen (0.4s)
+        heroTimeline.to(
+            ".airbnb-container > *",
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+            },
+            0.3,
+        );
+
+        // 3. IMAGE SLIDER - fade in (0.6s)
+        heroTimeline.to(
+            ".hero-content > *:first-child",
+            {
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out",
+            },
+            0.4,
+        );
+
+        // 4. PARAGRAPH - van onder invliegen (1.0s)
+        heroTimeline.to(
+            ".hero-text p",
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+            },
+            0.8,
+        );
+
+        console.log("✅ Complete hero animations initialized");
+    }
+
+    // ===================================
+    // 🚀 START ANIMATIE
+    // ===================================
+
+    document.addEventListener("lenisReady", initHeroAnimation);
+
+    if (window.lenisReady) {
+        initHeroAnimation();
+    }
+
+    setTimeout(() => {
+        if (window.gsap && !document.querySelector(".reveal-overlay")) {
+            console.log("🔄 Fallback: Starting hero animation via timeout");
+            initHeroAnimation();
+        }
+    }, 2000);
+</script>
 
 <style>
     .hero {
@@ -45,6 +194,8 @@ import Reviews from "../atoms/reviews.astro";
 
     h1 {
         max-width: 330px;
+        opacity: 0; /* Verberg tekst initieel */
+        visibility: hidden;
     }
 
     p {
@@ -59,6 +210,10 @@ import Reviews from "../atoms/reviews.astro";
         gap: 16px;
         padding: 16px 0 0px;
         align-items: center;
+    }
+
+    .scroll-down-btn:hover {
+        opacity: 0.7;
     }
 
     a span {
@@ -98,6 +253,9 @@ import Reviews from "../atoms/reviews.astro";
         border-radius: 12px;
         line-height: 1;
         z-index: 12;
+        box-shadow:
+            0 19px 38px rgba(0, 0, 0, 0.3),
+            0 10px 12px rgba(0, 0, 0, 0.22);
         white-space: nowrap;
         background-size: 300%;
         transition: background-position 0.6s;
@@ -111,6 +269,33 @@ import Reviews from "../atoms/reviews.astro";
     .airbnb-btn:hover {
         color: #fff;
         background-position: 100%;
+    }
+
+    /* LINE WRAPPER VOOR MASKING */
+    :global(.line-wrapper-title) {
+        position: relative;
+        overflow: hidden; /* Belangrijk: verberg overlays */
+        display: inline-block;
+        width: 100%;
+    }
+
+    /* TEKST OP NORMALE POSITIE */
+    :global(.line) {
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* REVEAL OVERLAY */
+    :global(.reveal-overlay) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--light-color);
+        z-index: 2;
+        transform: translateX(0); /* Start positie: bedekt tekst */
     }
 
     @media screen and (min-width: 544px) {
@@ -194,3 +379,31 @@ import Reviews from "../atoms/reviews.astro";
         }
     }
 </style>
+
+<!-- ALTERNATIEVE REVEAL RICHTINGEN -->
+<!--
+
+VAN LINKS NAAR RECHTS (huidige):
+x: "100%"
+
+VAN RECHTS NAAR LINKS:
+window.gsap.set(".reveal-overlay", { x: "100%" });
+window.gsap.to(".reveal-overlay", { x: "0%" });
+
+VAN MIDDEN NAAR BUITEN:
+window.gsap.set(".reveal-overlay", { 
+    x: "50%", 
+    transformOrigin: "center" 
+});
+window.gsap.to(".reveal-overlay", { 
+    scaleX: 0,
+    transformOrigin: "center"
+});
+
+CUSTOM EASING OPTIES:
+ease: "power3.out"    // Smooth deceleration (huidige)
+ease: "back.out(1.3)" // Slight overshoot
+ease: "expo.out"      // Exponential deceleration  
+ease: "circ.out"      // Circular easing
+
+-->
