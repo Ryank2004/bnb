@@ -83,9 +83,7 @@ h2 {
 
 :focus {
     outline: 2px solid var(--secondairy-color);
-    /* Using your yellow brand color */
-    outline-offset: 3px;
-    transition: outline-offset 0.2s ease;
+    border-radius: 10px;
 }
 
 /* Remove default focus outline for mouse users, but keep it for keyboard */
@@ -95,8 +93,7 @@ h2 {
 
 :focus-visible {
     outline: 2px solid var(--secondairy-color);
-    outline-offset: 3px;
-    transition: outline-offset 0.2s ease;
+    border-radius: 10px;
 }
 
  /* REVEAL OVERLAY */
