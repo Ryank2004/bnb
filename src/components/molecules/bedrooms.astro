@@ -1,3 +1,7 @@
+---
+import ImageOverlay from "../atoms/imageOverlay.astro";
+---
+
 <section class="bedrooms-container">
     <h2>Where you will sleep</h2>
     <div class="bedrooms">
@@ -29,108 +33,70 @@
             </p>
         </div>
     </div>
-    <div id="bedroom-overlay" class="bedroom-overlay">
-        <button
-            id="bedroom-overlay-close"
-            class="bedroom-overlay-close"
-            aria-label="Sluiten"
-            ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                ></path>
-            </svg>
-        </button>
-        <img id="bedroom-overlay-img" alt="" />
-    </div>
+    <ImageOverlay
+        id="bedroom-overlay"
+        triggerSelector=".bedrooms-container .image"
+        closeOnBackdrop={true}
+    />
 </section>
 
 <script is:inline>
-    const image = document.querySelectorAll(".bedrooms-container .image");
-    const bedroomOverlay = document.getElementById("bedroom-overlay");
-    const overlayImage = document.getElementById("bedroom-overlay-img");
-    const closeButton = document.getElementById("bedroom-overlay-close");
-
-    image.forEach((img) => {
-        img.addEventListener("click", () => {
-            overlayImage.src = img.src;
-            overlayImage.alt = img.alt;
-            bedroomOverlay.classList.add("active");
-        });
-    });
-
-    bedroomOverlay.addEventListener("click", () => {
-        bedroomOverlay.classList.remove("active");
-    });
-
-    closeButton.addEventListener("click", () => {
-        bedroomOverlay.classList.remove("active");
-    });
-
     // ===================================
     // 🚀 GSAP ANIMATIES
     // ===================================
 
     function initBedroomAnimations() {
-    if (!window.lenisReady || !window.gsap) {
-        setTimeout(initBedroomAnimations, 100);
-        return;
+        if (!window.lenisReady || !window.gsap) {
+            setTimeout(initBedroomAnimations, 100);
+            return;
+        }
+
+        console.log("🛏️ Starting bedroom animations...");
+
+        // Set initial state voor alle images
+        window.gsap.set(".image", {
+            scale: 1.1,
+        });
+
+        // Set initial state voor alle teksten
+        window.gsap.set(".bedrooms-text", {
+            y: 20,
+            opacity: 0,
+        });
+
+        // Individuele animaties voor elke image
+        const images = document.querySelectorAll(".image");
+        images.forEach((imageElement, index) => {
+            window.gsap.to(imageElement, {
+                scale: 1,
+                scrollTrigger: {
+                    trigger: imageElement.closest(".bedroom"),
+                    start: "top 85%",
+                    end: "bottom 60%",
+                    scrub: 1,
+                    // markers: true,
+                },
+            });
+        });
+
+        // Individuele animaties voor elke tekst (met kleine delay na image)
+        const bedroomTexts = document.querySelectorAll(".bedrooms-text");
+        bedroomTexts.forEach((textElement, index) => {
+            window.gsap.to(textElement, {
+                y: 0,
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: textElement.closest(".bedroom"),
+                    start: "top 70%", // Iets later dan de image
+                    end: "85% 70%",
+                    scrub: 1,
+                    // markers: true,
+                },
+            });
+        });
+
+        console.log("✅ Bedroom animations initialized");
     }
-
-    console.log("🛏️ Starting bedroom animations...");
-
-    // Set initial state voor alle images
-    window.gsap.set(".image", {
-        scale: 1.1,
-    });
-
-    // Set initial state voor alle teksten
-    window.gsap.set(".bedrooms-text", {
-        y: 20,
-        opacity: 0,
-    });
-
-    // Individuele animaties voor elke image
-    const images = document.querySelectorAll(".image");
-    images.forEach((imageElement, index) => {
-        window.gsap.to(imageElement, {
-            scale: 1,
-            scrollTrigger: {
-                trigger: imageElement.closest('.bedroom'),
-                start: "top 85%",
-                end: "bottom 60%",
-                scrub: 1,
-                // markers: true,
-            },
-        });
-    });
-
-    // Individuele animaties voor elke tekst (met kleine delay na image)
-    const bedroomTexts = document.querySelectorAll(".bedrooms-text");
-    bedroomTexts.forEach((textElement, index) => {
-        window.gsap.to(textElement, {
-            y: 0,
-            opacity: 1,
-            scrollTrigger: {
-                trigger: textElement.closest('.bedroom'),
-                start: "top 70%", // Iets later dan de image
-                end: "85% 70%",
-                scrub: 1,
-                // markers: true,
-            },
-        });
-    });
-
-    console.log("✅ Bedroom animations initialized");
-}
 
     // Start animaties wanneer dependencies klaar zijn
     document.addEventListener("lenisReady", initBedroomAnimations);

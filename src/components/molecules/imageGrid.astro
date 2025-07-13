@@ -1,5 +1,6 @@
 ---
 import Arrow from "../atoms/arrow.astro";
+import ImageOverlay from "../atoms/imageOverlay.astro";
 ---
 
 <section class="image-grid" id="image-grid">
@@ -51,26 +52,7 @@ import Arrow from "../atoms/arrow.astro";
         </div>
     </div>
 
-    <!-- Lightbox overlay -->
-    <div id="lightbox" class="lightbox">
-        <button id="lightbox-close" class="lightbox-close" aria-label="Sluiten"
-            ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-6"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                ></path>
-            </svg>
-        </button>
-        <img id="lightbox-img" alt="" />
-    </div>
+    <ImageOverlay id="image-grid-overlay" triggerSelector=".image-grid .thumb" />
 
     <!-- Volledige galerij overlay -->
     <div id="full-gallery" class="full-gallery" data-lenis-prevent>
@@ -109,7 +91,7 @@ import Arrow from "../atoms/arrow.astro";
             <div class="grid-container">
                 <img src="/images/bathroom-1.webp" alt="Bathroom" />
                 <img src="/images/bathroom-2.webp" alt="Bathroom" />
-                <img src="/images/bathroom-2.webp" alt="Bathroom" />
+                <img src="/images/bathroom-3.webp" alt="Bathroom" />
             </div>
 
             <h3>Garden</h3>
@@ -140,29 +122,9 @@ import Arrow from "../atoms/arrow.astro";
 </section>
 
 <script is:inline>
-    const thumbs = document.querySelectorAll(".image-grid .thumb");
-    const lb = document.getElementById("lightbox");
-    const lbImg = document.getElementById("lightbox-img");
-    const closeBtn = document.getElementById("lightbox-close");
     const showAllBtn = document.getElementById("show-all-btn");
     const fullGallery = document.getElementById("full-gallery");
     const galleryBack = document.getElementById("gallery-back");
-
-    thumbs.forEach((img) => {
-        img.addEventListener("click", () => {
-            lbImg.src = img.src;
-            lbImg.alt = img.alt;
-            lb.classList.add("active");
-        });
-    });
-
-    lb.addEventListener("click", () => {
-        lb.classList.remove("active");
-    });
-
-    closeBtn.addEventListener("click", () => {
-        lb.classList.remove("active");
-    });
 
     // Show all photos functionaliteit
     showAllBtn.addEventListener("click", (e) => {

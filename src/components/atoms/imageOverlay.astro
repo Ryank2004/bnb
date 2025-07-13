@@ -1,0 +1,166 @@
+---
+// src/components/atoms/ImageOverlay.astro
+interface Props {
+  id?: string;
+  triggerSelector: string;
+  closeOnBackdrop?: boolean;
+}
+
+const { 
+  id = 'image-overlay', 
+  triggerSelector,
+  closeOnBackdrop = true 
+} = Astro.props;
+---
+
+<div class="image-overlay" id={id} data-trigger={triggerSelector}>
+    <button class="image-overlay-close" aria-label="Sluiten">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            ></path>
+        </svg>
+    </button>
+    <img class="image-overlay-img" alt="" />
+</div>
+
+<script is:inline>
+class ImageOverlay {
+    constructor(overlayElement) {
+        this.overlay = overlayElement;
+        this.img = this.overlay.querySelector('.image-overlay-img');
+        this.closeBtn = this.overlay.querySelector('.image-overlay-close');
+        this.triggerSelector = this.overlay.dataset.trigger;
+        this.closeOnBackdrop = this.overlay.dataset.closeBackdrop !== 'false';
+        
+        this.init();
+    }
+    
+    init() {
+        // Event listeners voor trigger images
+        document.addEventListener('click', (e) => {
+            if (e.target.matches(this.triggerSelector)) {
+                this.show(e.target);
+            }
+        });
+        
+        // Close button
+        this.closeBtn.addEventListener('click', () => this.hide());
+        
+        // Close op backdrop click (optioneel)
+        if (this.closeOnBackdrop) {
+            this.overlay.addEventListener('click', (e) => {
+                if (e.target === this.overlay) {
+                    this.hide();
+                }
+            });
+        }
+        
+        // ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.overlay.classList.contains('active')) {
+                this.hide();
+            }
+        });
+    }
+    
+    show(triggerImg) {
+        this.img.src = triggerImg.src;
+        this.img.alt = triggerImg.alt;
+        this.overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    hide() {
+        this.overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Auto-initialize alle overlays
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.image-overlay').forEach(overlay => {
+        new ImageOverlay(overlay);
+    });
+});
+</script>
+
+<style>
+    .image-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+        cursor: zoom-out;
+        z-index: 1000;
+        transition:
+            opacity 0.2s ease-out,
+            visibility 0.2s ease-out;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        display: flex;
+    }
+
+    .image-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .image-overlay-img {
+        max-width: 90%;
+        max-height: 90%;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .image-overlay-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: transparent;
+        border: none;
+        font-size: 2rem;
+        color: var(--light-color);
+        cursor: pointer;
+        z-index: 1001;
+        line-height: 1;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+    }
+
+    .image-overlay-close:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .image-overlay-close svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .image-overlay-close:focus {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .image-overlay-close svg {
+            width: 32px;
+            height: 32px;
+        }
+    }
+</style>
